@@ -1,4 +1,4 @@
-package org;
+package org.CustomClass;
 
 import org.CustomClass.Enums.Gender;
 
