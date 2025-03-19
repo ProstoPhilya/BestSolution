@@ -11,13 +11,11 @@ public class Animal implements Externalizable, Comparable<Animal> {
     private String species;
     private String eyeColor;
     private boolean isWool;
-    private int age;
 
     private Animal(Builder builder) {
         this.species = builder.species;
         this.eyeColor = builder.eyeColor;
         this.isWool = builder.isWool;
-        this.age = builder.age;
     }
 
     public Animal(){}
@@ -50,7 +48,6 @@ public class Animal implements Externalizable, Comparable<Animal> {
         out.writeObject(species);
         out.writeObject(eyeColor);
         out.writeBoolean(isWool);
-        out.writeInt(age);
     }
 
     @Override
@@ -64,9 +61,6 @@ public class Animal implements Externalizable, Comparable<Animal> {
         else throw new ClassCastException("Invalid eyeColor");
 
         isWool = in.readBoolean();
-        int tAge = in.readInt();
-        if (Util.isIntValid(tAge)) age = tAge;
-        else throw new ClassCastException("Invalid age");
     }
 
     @Override
@@ -88,7 +82,6 @@ public class Animal implements Externalizable, Comparable<Animal> {
                 "species='" + species + '\'' +
                 ", eyeColor='" + eyeColor + '\'' +
                 ", isWool=" + isWool + '\'' +
-                ", age=" + age +
                 '}';
     }
 
@@ -96,7 +89,6 @@ public class Animal implements Externalizable, Comparable<Animal> {
         private String species;
         private String eyeColor;
         private boolean isWool;
-        private int age;
 
         public Builder() {}
 
@@ -114,12 +106,6 @@ public class Animal implements Externalizable, Comparable<Animal> {
 
         public Builder wool(boolean wool) {
             isWool = wool;
-            return this;
-        }
-
-        public Builder age(int age) throws Exception {
-            if (!Util.isIntValid(age)) throw new Exception("Invalid age");
-            this.age = age;
             return this;
         }
 
