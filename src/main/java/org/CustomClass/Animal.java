@@ -4,6 +4,7 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Objects;
 
 public class Animal implements Externalizable, Comparable<Animal> {
     private static final Long serialVersionUID = 1L;
@@ -41,17 +42,7 @@ public class Animal implements Externalizable, Comparable<Animal> {
         comparison = Util.comparingString(Animal::getEyeColor).compare(this, o);
         if (comparison != 0) return comparison;
 
-        return Boolean.compare(this.isWool, o.isWool);
-    }
-
-    @Override
-    public String toString() {
-        return "Animal{" +
-                "species='" + species + '\'' +
-                ", eyeColor='" + eyeColor + '\'' +
-                ", isWool=" + isWool + '\'' +
-                ", age=" + age +
-                '}';
+        return Util.comparingBoolean(Animal::isWool).compare(this, o);
     }
 
     @Override
@@ -76,6 +67,29 @@ public class Animal implements Externalizable, Comparable<Animal> {
         int tAge = in.readInt();
         if (Util.isIntValid(tAge)) age = tAge;
         else throw new ClassCastException("Invalid age");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return isWool == animal.isWool && Objects.equals(species, animal.species) && Objects.equals(eyeColor, animal.eyeColor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(species, eyeColor, isWool);
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "species='" + species + '\'' +
+                ", eyeColor='" + eyeColor + '\'' +
+                ", isWool=" + isWool + '\'' +
+                ", age=" + age +
+                '}';
     }
 
     public static class Builder {
