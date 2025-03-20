@@ -110,13 +110,13 @@ public class Main {
                     System.out.println("Insert Sort");
                     break;
                 case 41:
-                    System.out.println("Insert Sort нечёиных классов");
+                    System.out.println("Insert Sort нечетных классов");
                     break;
                 case 42:
-                    System.out.println("Insert Sort чёиных классов");
+                    System.out.println("Insert Sort четных классов");
                     break;
                 case 5:
-                    System.out.println("Указжите какой разыскуемы объект");
+                    System.out.println("Укажите какой разыскиваемый объект");
                     break;
                 case 6:
                     System.out.print("Укажите путь к файлу: ");
@@ -128,7 +128,7 @@ public class Main {
                     status_prog = false;
                     break;
                 default:
-                    System.out.println("Недопустимая команнда повторите ввод");
+                    System.out.println("Недопустимая команда повторите ввод");
                     break;
             }
         }
