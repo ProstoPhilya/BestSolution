@@ -4,8 +4,7 @@ import org.CustomClass.Enums.Gender;
 
 import java.util.Scanner;
 
-class Human {
-
+public class Human {
     private Gender gender;
     private int age;
     private String surname;
@@ -14,41 +13,6 @@ class Human {
         this.gender = builder.gender;
         this.age = builder.age;
         this.surname = builder.surname;
-    }
-
-    public static class HumanBuilder {
-
-        private Gender gender;
-        private int age;
-        private String surname;
-
-        public HumanBuilder setGender(Gender gender) {
-            this.gender = gender;
-            return this;
-        }
-
-        public HumanBuilder setAge(int age) {
-            this.age = age;
-            return this;
-        }
-
-        public HumanBuilder setSurname(String surname) {
-            this.surname = surname;
-            return this;
-        }
-
-        public Human build() {
-            if (gender == null) {
-                throw new IllegalArgumentException("Пол должен быть установлен");
-            }
-            if (age < 0) {
-                throw new IllegalArgumentException("Возраст не может быть отрицательным");
-            }
-            if (surname == null || surname.trim().isEmpty()) {
-                throw new IllegalArgumentException("Фамилия должна быть установлена");
-            }
-            return new Human(this);
-        }
     }
 
     public static Human fromString(String data) {
@@ -96,5 +60,39 @@ class Human {
                 ", age=" + age +
                 ", surname='" + surname + '\'' +
                 '}';
+    }
+
+    public static class HumanBuilder {
+        private Gender gender;
+        private int age;
+        private String surname;
+
+        public HumanBuilder setGender(Gender gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public HumanBuilder setAge(int age) {
+            this.age = age;
+            return this;
+        }
+
+        public HumanBuilder setSurname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+
+        public Human build() {
+            if (gender == null) {
+                throw new IllegalArgumentException("Пол должен быть установлен");
+            }
+            if (age < 0) {
+                throw new IllegalArgumentException("Возраст не может быть отрицательным");
+            }
+            if (surname == null || surname.trim().isEmpty()) {
+                throw new IllegalArgumentException("Фамилия должна быть установлена");
+            }
+            return new Human(this);
+        }
     }
 }
