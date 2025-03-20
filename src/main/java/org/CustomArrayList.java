@@ -1,4 +1,4 @@
-package org.CustomClass;
+package org;
 
 import java.util.Arrays;
 
