@@ -1,7 +1,5 @@
 package org;
 
-import org.CustomClass.CustomArrayList;
-
 import java.util.Scanner;
 
 public class Main {
@@ -24,7 +22,8 @@ public class Main {
         System.out.println("6 - Записать отсортированный массив в файл");
 
 
-        System.out.println("7 - Выход");
+        System.out.println("7 - показать список комманд");
+        System.out.println("8 - Выход");
         System.out.print("Готов к вводу");
     }
 
@@ -123,6 +122,9 @@ public class Main {
                     System.out.print("Укажите путь к файлу: ");
                     break;
                 case 7:
+                    sout_menu();
+                    break;
+                case 8:
                     status_prog = false;
                     break;
                 default:
