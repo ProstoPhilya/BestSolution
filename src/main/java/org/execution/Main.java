@@ -1,4 +1,4 @@
-package org;
+package org.execution;
 
 import org.CustomClass.Animal;
 import org.CustomClass.factory.AnimalFactory;
@@ -32,15 +32,16 @@ public class Main {
 
     public static void main(String[] args) {
         int userCommand;
-        int sizeArray = 0;
+        int sizeArray = 10;
         boolean running = true;
         String fileName;
         Scanner scanner = new Scanner(System.in);
         AnimalFactory animalFactory = new AnimalFactory();
-        CustomArrayList<Animal> arrayList = null;
+
+        CustomArrayList<BasicClass> arrayList = new CustomArrayList<>(sizeArray);
 
         System.out.println("Введите команду:");
-        sout_menu();
+        //sout_menu();
 
         try {
             while (running) {
@@ -55,7 +56,7 @@ public class Main {
                         scanner.nextLine();
                         System.out.print("Укажите файл: ");
                         fileName = scanner.next();
-                        arrayList = animalFactory.fromFile(fileName, sizeArray);
+                        arrayList.addAll(animalFactory.fromFile(fileName, sizeArray));
                         arrayList.print();
                         break;
                     case 11:
@@ -64,7 +65,7 @@ public class Main {
                             sizeArray = scanner.nextInt();
                         }
                         System.out.println("Рандом Animal " + sizeArray);
-                        arrayList = animalFactory.fromGenerator(sizeArray);
+                        //arrayList = animalFactory.fromGenerator(sizeArray);
                         arrayList.print();
                         break;
                     case 12:
@@ -74,7 +75,114 @@ public class Main {
                             scanner.nextLine();
                         }
                         System.out.println("Ручной Animal " + sizeArray);
-                        arrayList = animalFactory.fromConsole(scanner, sizeArray);
+                        //arrayList = animalFactory.fromConsole(scanner, sizeArray);
+                        arrayList.print();
+                        break;
+                    case 20:
+                        scanner.nextLine();
+                        System.out.print("Укажите файл: ");
+                        fileName = scanner.next();
+                        System.out.println("Из файла " + fileName + " заполнить массив Barrel");
+                        break;
+                    case 21:
+                        if (sizeArray == 0) {
+                            System.out.print("Укажите размер массива = ");
+                            sizeArray = scanner.nextInt();
+                        }
+                        System.out.println("Рандом Barrel " + sizeArray);
+                        break;
+                    case 22:
+                        if (sizeArray == 0) {
+                            System.out.print("Укажите размер массива = ");
+                            sizeArray = scanner.nextInt();
+                            scanner.nextLine();
+                        }
+                        System.out.println("Ручной Barrel " + sizeArray);
+                        break;
+                    case 30:
+                        scanner.nextLine();
+                        System.out.print("Укажите файл: ");
+                        fileName = scanner.next();
+                        System.out.println("Из файла " + fileName + " заполнить массив Human");
+                        break;
+                    case 31:
+                        if (sizeArray == 0) {
+                            System.out.print("Укажите размер массива = ");
+                            sizeArray = scanner.nextInt();
+                        }
+                        System.out.println("Рандом Human " + sizeArray);
+                        break;
+                    case 32:
+                        if (sizeArray == 0) {
+                            System.out.print("Укажите размер массива = ");
+                            sizeArray = scanner.nextInt();
+                            scanner.nextLine();
+                        }
+                        System.out.println("Ручной Human " + sizeArray);
+                        break;
+                    case 4:
+                        System.out.println("Insert Sort");
+                        break;
+                    case 41:
+                        System.out.println("Insert Sort нечетных классов");
+                        break;
+                    case 42:
+                        System.out.println("Insert Sort четных классов");
+                        break;
+                    case 5:
+                        System.out.println("Укажите какой разыскиваемый объект");
+                        break;
+                    case 6:
+                        System.out.print("Укажите путь к файлу: ");
+                        break;
+                    case 7:
+                        sout_menu();
+                        break;
+                    case 8:
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Недопустимая команда повторите ввод");
+                        break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            while (running) {
+                System.out.print("->");
+                userCommand = scanner.nextInt();
+                switch (userCommand) {
+                    case 1:
+                        System.out.print("Размер массива = ");
+                        sizeArray = scanner.nextInt();
+                        break;
+                    case 10:
+                        scanner.nextLine();
+                        System.out.print("Укажите файл: ");
+                        fileName = scanner.next();
+                        //arrayList = animalFactory.fromFile(fileName, sizeArray);
+                        arrayList.print();
+                        break;
+                    case 11:
+                        if (sizeArray == 0) {
+                            System.out.print("Укажите размер массива = ");
+                            sizeArray = scanner.nextInt();
+                        }
+                        System.out.println("Рандом Animal " + sizeArray);
+                        //arrayList = animalFactory.fromGenerator(sizeArray);
+                        arrayList.print();
+                        break;
+                    case 12:
+                        if (sizeArray == 0) {
+                            System.out.print("Укажите размер массива = ");
+                            sizeArray = scanner.nextInt();
+                            scanner.nextLine();
+                        }
+                        System.out.println("Ручной Animal " + sizeArray);
+                        //arrayList = animalFactory.fromConsole(scanner, sizeArray);
                         arrayList.print();
                         break;
                     case 20:

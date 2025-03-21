@@ -1,8 +1,11 @@
-package org;
+package org.execution;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class CustomArrayList<T> {
+public class CustomArrayList<T> implements Iterable<T>{
     private Object[] array;
     private int size = 10;
     private int capacity = 0;
@@ -26,10 +29,48 @@ public class CustomArrayList<T> {
     }
 
     public void add(T elemet) {
-        if (capacity + 1 == size) resize();
+        if (capacity + 1 == size)
+            resize((size+10));
         array[capacity++] = elemet;
     }
 
+    public void addAll(CustomArrayList<T> collection) {
+        if (collection == null) {
+            throw new NullPointerException("Collection cannot be null");
+        }
+
+        if (collection.size() > size - capacity) {
+            resize(collection.size());
+        }
+
+        for (T element : collection) {
+            add(element);
+        }
+    }
+
+    // Реализация интерфейса Iterable<T>
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayListIterator();
+    }
+
+    // Внутренний класс для реализации итератора
+    private class ArrayListIterator implements Iterator<T> {
+        private int currentIndex = 0;
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < size;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return (T) array[currentIndex++];
+        }
+    }
     public void set(int index, T element) {
         indexValidation(index);
         array[index] = element;
@@ -46,10 +87,10 @@ public class CustomArrayList<T> {
         array[capacity--] = null;
     }
 
-    private void resize() {
-        int newSize = size + (size >> 1);
+    private void resize(int neededSize) {
+        int newSize = Math.max(size * 2, capacity + neededSize);
         array = Arrays.copyOf(array, newSize);
-        size = newSize;
+        this.size = newSize;
     }
 
     public boolean isEmpty() {
