@@ -1,15 +1,16 @@
 package org.execution;
 
-public class BasicClass {
-    private final int id;
+import org.CustomClass.Enums.Classes;
 
-    public BasicClass(int id) {
-        this.id = id;
-        System.out.println("Object with ID " + id + " created.");
+public class BasicClass<T> {
+    private Object element;
+
+    public BasicClass(Classes nameClass) {
+        this.element = element;
     }
 
-    public int getId() {
-        return id;
+    public T getElement() {
+        return (T) element;
     }
 
     @Override
