@@ -60,6 +60,7 @@ public class Animal implements Serializable, Comparable<Animal> {
                 '}';
     }
 
+
     public static class Builder {
         private String species;
         private String eyeColor;

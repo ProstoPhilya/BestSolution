@@ -1,6 +1,6 @@
 package org.CustomClass.SortStrategy;
 
-import org.CustomArrayList;
+import org.execution.CustomArrayList;
 
 public class SortStrategy<T extends Comparable<T>> implements SortingStrategy<T> {
     @Override

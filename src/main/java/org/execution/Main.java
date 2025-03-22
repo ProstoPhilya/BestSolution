@@ -1,4 +1,4 @@
-package org;
+package org.execution;
 
 import org.CustomClass.Animal;
 import org.CustomClass.factory.AnimalFactory;
@@ -10,19 +10,19 @@ public class Main {
         System.out.println("1 - Указать размер массива");
         System.out.println("10 - Заполнить массив Animal с файла");
         System.out.println("\t11 - Заполнить массив Animal случайно");
-        System.out.println("\t12 - Заполнить массив Animal случайно вручную");
+        System.out.println("\t12 - Заполнить массив Animal вручную");
         System.out.println("20 - Заполнить массив Barrel с файла");
         System.out.println("\t21 - Заполнить массив Barrel случайно");
-        System.out.println("\t22 - Заполнить массив Barrel случайно вручную");
+        System.out.println("\t22 - Заполнить массив Barrel вручную");
         System.out.println("30 - Заполнить массив Human с файла");
         System.out.println("\t31 - Заполнить массив Human случайно");
-        System.out.println("\t32 - Заполнить массив Human случайно вручную\n");
+        System.out.println("\t32 - Заполнить массив Human вручную\n");
 
         System.out.println("4 - Отсортировать массив");
         System.out.println("\t41 - Отсортировать нечётные классы массива");
         System.out.println("\t42 - Отсортировать чётные классы массива");
         System.out.println("5 - Поиск нужного класса в массиве");
-        System.out.println("6 - Записать отсортированный массив в файл");
+        System.out.println("6 - Записать массив в файл");
 
 
         System.out.println("7 - показать список комманд");
