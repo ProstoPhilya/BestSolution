@@ -1,6 +1,6 @@
 package org.execution;
 
-import org.CustomClass.Animal;
+import org.CustomClass.BasicClass;
 import org.CustomClass.factory.AnimalFactory;
 
 import java.util.Scanner;
@@ -32,12 +32,13 @@ public class Main {
 
     public static void main(String[] args) {
         int userCommand;
-        int sizeArray = 0;
+        int sizeArray = 10;
         boolean running = true;
         String fileName;
         Scanner scanner = new Scanner(System.in);
         AnimalFactory animalFactory = new AnimalFactory();
-        CustomArrayList<Animal> arrayList = null;
+
+        CustomArrayList<BasicClass> arrayList = new CustomArrayList<>(sizeArray);
 
         System.out.println("Введите команду:");
         sout_menu();
@@ -59,21 +60,21 @@ public class Main {
                         arrayList.print();
                         break;
                     case 11:
+                        scanner.nextLine();
                         if (sizeArray == 0) {
                             System.out.print("Укажите размер массива = ");
                             sizeArray = scanner.nextInt();
                         }
-                        System.out.println("Рандом Animal " + sizeArray);
                         arrayList = animalFactory.fromGenerator(sizeArray);
                         arrayList.print();
                         break;
                     case 12:
+                        scanner.nextLine();
                         if (sizeArray == 0) {
                             System.out.print("Укажите размер массива = ");
                             sizeArray = scanner.nextInt();
                             scanner.nextLine();
                         }
-                        System.out.println("Ручной Animal " + sizeArray);
                         arrayList = animalFactory.fromConsole(scanner, sizeArray);
                         arrayList.print();
                         break;
@@ -132,7 +133,13 @@ public class Main {
                         System.out.println("Укажите какой разыскиваемый объект");
                         break;
                     case 6:
-                        System.out.print("Укажите путь к файлу: ");
+                        scanner.nextLine();
+                        System.out.print("Укажите файл: ");
+                        fileName = scanner.next();
+                        for (BasicClass entity : arrayList) {
+                            if(entity == null) break;
+                            entity.saveToFile(fileName);
+                        }
                         break;
                     case 7:
                         sout_menu();

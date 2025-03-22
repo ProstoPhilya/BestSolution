@@ -1,9 +1,12 @@
 package org.CustomClass;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
-public class Animal implements Serializable, Comparable<Animal> {
+public class Animal extends BasicClass implements Serializable, Comparable<Animal> {
     private static final Long serialVersionUID = 1L;
     private String species;
     private String eyeColor;
@@ -60,6 +63,16 @@ public class Animal implements Serializable, Comparable<Animal> {
                 '}';
     }
 
+    @Override
+    public void saveToFile(String fileName) throws IOException {
+        String data = String.format("%s,%s,%b,%d\n", species, eyeColor, isWool, age);
+        Path path = Paths.get(fileName);
+        if (!Files.exists(path)) Files.createFile(path);
+
+        try (FileWriter writer = new FileWriter(path.toFile(), true)) {
+            writer.write(data);
+        }
+    }
 
     public static class Builder {
         private String species;
