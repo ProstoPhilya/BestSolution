@@ -39,7 +39,7 @@ public class AnimalFactory implements FactoryStrategy<Animal> {
             String specie = species[random.nextInt(species.length)];
             String eyeColor = eyeColors[random.nextInt(eyeColors.length)];
             boolean isWool = random.nextBoolean();
-            int age = random.nextInt(31);
+            int age = random.nextInt(30);
 
             arrayList.add(new Animal.Builder()
                     .species(specie)

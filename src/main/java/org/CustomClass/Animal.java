@@ -4,7 +4,6 @@ import org.CustomClass.Saved.Savable;
 import org.CustomClass.Saved.WriteToFile;
 
 import java.io.*;
-import java.util.Objects;
 
 public class Animal implements Savable, Serializable, Comparable<Animal> {
     private static final Long serialVersionUID = 1L;
@@ -60,7 +59,7 @@ public class Animal implements Savable, Serializable, Comparable<Animal> {
                 ", eyeColor='" + eyeColor + '\'' +
                 ", isWool=" + isWool + '\'' +
                 ", age=" + age +
-                '}';
+                "}";
     }
 
     @Override
