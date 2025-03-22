@@ -3,6 +3,7 @@ package org;
 import org.CustomClass.Animal;
 import org.CustomClass.factory.AnimalFactory;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -37,7 +38,7 @@ public class Main {
         String fileName;
         Scanner scanner = new Scanner(System.in);
         AnimalFactory animalFactory = new AnimalFactory();
-        CustomArrayList<Animal> arrayList = null;
+        List<Animal> arrayList = null;
 
         System.out.println("Введите команду:");
         sout_menu();
@@ -56,16 +57,15 @@ public class Main {
                         System.out.print("Укажите файл: ");
                         fileName = scanner.next();
                         arrayList = animalFactory.fromFile(fileName, sizeArray);
-                        arrayList.print();
+                        System.out.println(arrayList.toString());
                         break;
                     case 11:
                         if (sizeArray == 0) {
                             System.out.print("Укажите размер массива = ");
                             sizeArray = scanner.nextInt();
                         }
-                        System.out.println("Рандом Animal " + sizeArray);
                         arrayList = animalFactory.fromGenerator(sizeArray);
-                        arrayList.print();
+                        System.out.println(arrayList.toString());
                         break;
                     case 12:
                         if (sizeArray == 0) {
@@ -75,7 +75,7 @@ public class Main {
                         }
                         System.out.println("Ручной Animal " + sizeArray);
                         arrayList = animalFactory.fromConsole(scanner, sizeArray);
-                        arrayList.print();
+                        System.out.println(arrayList.toString());
                         break;
                     case 20:
                         scanner.nextLine();

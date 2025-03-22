@@ -4,10 +4,11 @@ import org.CustomArrayList;
 import org.CustomClass.Animal;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public interface FactoryStrategy<T> {
-    CustomArrayList<T> fromFile(String fileName, int size) throws IOException, ClassNotFoundException;
-    CustomArrayList<T> fromGenerator(int size);
-    CustomArrayList<Animal> fromConsole(Scanner scanner, int size);
+    List<T> fromFile(String fileName, int size) throws IOException, ClassNotFoundException;
+    List<T> fromGenerator(int size);
+    List<Animal> fromConsole(Scanner scanner, int size);
 }

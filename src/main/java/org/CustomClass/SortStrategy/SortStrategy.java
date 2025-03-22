@@ -9,8 +9,7 @@ public class SortStrategy<T extends Comparable<T>> implements SortingStrategy<T>
             T key = items.get(i);
             int j = i - 1;
 
-            // Перемещаем элементы массива, которые больше чем key, на одну позицию вперед
-            while (j >= 0 && items.get(j).compareTo(key) > 0) { //При определёных типах выглядело бы items[j] > key
+            while (j >= 0 && items.get(j).compareTo(key) > 0) {
                 items.set(j + 1, items.get(j--));
             }
             items.set(j + 1, key);
