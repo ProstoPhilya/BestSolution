@@ -22,7 +22,7 @@ public class Human {
         }
 
         try {
-            Gender gender = Gender.valueOf(parts[0].trim());
+            Gender gender = Gender.fromValue(parts[0].trim());
             int age = Integer.parseInt(parts[1].trim());
             String surname = parts[2].trim();
 
@@ -32,13 +32,13 @@ public class Human {
                     .setSurname(surname)
                     .build();
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Верный формат данных", e);
+            throw new IllegalArgumentException("Неверный формат данных", e);
         }
     }
 
     public static Human fromUserInput(Scanner scanner) {
-        System.out.println("Введите пол (MALE, FEMALE):");
-        Gender gender = Gender.valueOf(scanner.nextLine().trim());
+        System.out.println("Введите пол (Мужской, Женский):");
+        Gender gender = Gender.fromValue(scanner.nextLine().trim());
 
         System.out.println("Введите возраст:");
         int age = Integer.parseInt(scanner.nextLine().trim());
@@ -56,7 +56,7 @@ public class Human {
     @Override
     public String toString() {
         return "Human{" +
-                "gender=" + gender +
+                "gender=" + gender.getValue() +
                 ", age=" + age +
                 ", surname='" + surname + '\'' +
                 '}';
@@ -83,13 +83,13 @@ public class Human {
         }
 
         public Human build() {
-            if (gender == null) {
+            if (!Util.isStringValid(gender.getValue())) {
                 throw new IllegalArgumentException("Пол должен быть установлен");
             }
-            if (age < 0) {
+            if (!Util.isIntValid(age)) {
                 throw new IllegalArgumentException("Возраст не может быть отрицательным");
             }
-            if (surname == null || surname.trim().isEmpty()) {
+            if (!Util.isStringValid(surname)) {
                 throw new IllegalArgumentException("Фамилия должна быть установлена");
             }
             return new Human(this);
