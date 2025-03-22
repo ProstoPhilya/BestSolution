@@ -1,23 +1,28 @@
 package org.CustomClass.factory;
 
+import org.CustomClass.BasicClass;
 import org.execution.CustomArrayList;
 import org.CustomClass.Animal;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
 
-public class AnimalFactory implements FactoryStrategy<Animal> {
+public class AnimalFactory implements FactoryStrategy<BasicClass> {
     @Override
-    public CustomArrayList<Animal> fromFile(String fileName, int size) throws IOException, ClassNotFoundException {
-        CustomArrayList<Animal> arrayList = new CustomArrayList<>(size);
+    public CustomArrayList<BasicClass> fromFile(String fileName, int size) throws IOException, ClassNotFoundException {
+        CustomArrayList<BasicClass> arrayList = new CustomArrayList<>(size);
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-            for (int i = 0; i < size; i++) {
-                Animal animal = (Animal) ois.readObject();
-                animal.validate();
+                Animal animal = new Animal.Builder()
+                        .species(parts[0])
+                        .eyeColor(parts[1])
+                        .wool(Boolean.parseBoolean(parts[2]))
+                        .age(Integer.parseInt(parts[3]))
+                        .build();
                 arrayList.add(animal);
             }
         } catch (Exception e) {
@@ -28,9 +33,9 @@ public class AnimalFactory implements FactoryStrategy<Animal> {
     }
 
     @Override
-    public CustomArrayList<Animal> fromGenerator(int size) {
+    public CustomArrayList<BasicClass> fromGenerator(int size) {
         Random random = new Random();
-        CustomArrayList<Animal> arrayList = new CustomArrayList<>(size);
+        CustomArrayList<BasicClass> arrayList = new CustomArrayList<>(size);
         String[] species = {"Собака", "Кот", "Слон", "Птица", "Лев"};
         String[] eyeColors = {"Белый", "Черный", "Рыжий", "Серый", "Коричневый"};
 
@@ -51,8 +56,8 @@ public class AnimalFactory implements FactoryStrategy<Animal> {
     }
 
     @Override
-    public CustomArrayList<Animal> fromConsole(Scanner scanner, int size) {
-        CustomArrayList<Animal> arrayList = new CustomArrayList<>(size);
+    public CustomArrayList<BasicClass> fromConsole(Scanner scanner, int size) {
+        CustomArrayList<BasicClass> arrayList = new CustomArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
             System.out.println("Создание Животного:");
