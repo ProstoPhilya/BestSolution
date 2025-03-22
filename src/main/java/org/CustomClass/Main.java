@@ -1,6 +1,5 @@
-package org;
+package org.CustomClass;
 
-import org.CustomClass.Animal;
 import org.CustomClass.factory.AnimalFactory;
 
 import java.util.List;
@@ -32,12 +31,13 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        int userCommand;
-        int sizeArray = 0;
         boolean running = true;
-        String fileName;
+        int userCommand;
         Scanner scanner = new Scanner(System.in);
+
+        int sizeArray = 0;
         AnimalFactory animalFactory = new AnimalFactory();
+        String fileName;
         List<Animal> arrayList = null;
 
         System.out.println("Введите команду:");
@@ -47,6 +47,7 @@ public class Main {
             while (running) {
                 System.out.print("->");
                 userCommand = scanner.nextInt();
+
                 switch (userCommand) {
                     case 1:
                         System.out.print("Размер массива = ");
@@ -119,6 +120,7 @@ public class Main {
                         }
                         System.out.println("Ручной Human " + sizeArray);
                         break;
+
                     case 4:
                         System.out.println("Insert Sort");
                         break;

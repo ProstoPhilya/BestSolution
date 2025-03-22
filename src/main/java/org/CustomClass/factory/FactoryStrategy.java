@@ -1,6 +1,5 @@
 package org.CustomClass.factory;
 
-import org.CustomArrayList;
 import org.CustomClass.Animal;
 
 import java.io.IOException;

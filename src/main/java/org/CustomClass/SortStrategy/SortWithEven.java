@@ -1,12 +1,12 @@
 package org.CustomClass.SortStrategy;
 
-import org.CustomArrayList;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 public final class SortWithEven {
-    public static <T extends Comparable<T>> void sort(CustomArrayList<T> items, Function<T, Integer> fieldGetter) {
-        CustomArrayList<T> even = new CustomArrayList<>();
+    public static <T extends Comparable<T>> void sort(List<T> items, Function<T, Integer> fieldGetter) {
+        List<T> even = new ArrayList<>();
         int index =  0;
 
         // добавляем все четные элементы в even ArrayList

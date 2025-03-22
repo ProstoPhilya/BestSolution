@@ -1,8 +1,8 @@
 package org.CustomClass.SortStrategy;
 
-import org.CustomArrayList;
+import java.util.List;
 
 public interface SortingStrategy<T> {
-    void sort(CustomArrayList<T> items);
+    void sort(List<T> items);
 
 }

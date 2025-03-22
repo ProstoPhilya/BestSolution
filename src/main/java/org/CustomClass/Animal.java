@@ -1,9 +1,12 @@
 package org.CustomClass;
 
+import org.CustomClass.Saved.Savable;
+import org.CustomClass.Saved.WriteToFile;
+
 import java.io.*;
 import java.util.Objects;
 
-public class Animal implements Serializable, Comparable<Animal> {
+public class Animal implements Savable, Serializable, Comparable<Animal> {
     private static final Long serialVersionUID = 1L;
     private String species;
     private String eyeColor;
@@ -58,6 +61,12 @@ public class Animal implements Serializable, Comparable<Animal> {
                 ", isWool=" + isWool + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    @Override
+    public void saveToFile(String fileName) throws IOException {
+        String data = String.format("%s,%s,%b,%d\n", species, eyeColor, isWool, age);
+        WriteToFile.writeDataToFile(fileName, data);
     }
 
     public static class Builder {

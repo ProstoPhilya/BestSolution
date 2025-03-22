@@ -1,10 +1,10 @@
 package org.CustomClass;
 
-import org.CustomArrayList;
+import java.util.List;
 
 public final class BinarySearch {
 
-    public static <T extends Comparable<T>> T search(CustomArrayList<T> arrayList, T element) {
+    public static <T extends Comparable<T>> T search(List<T> arrayList, T element) {
         int left = 0;
         int right = arrayList.size() - 1;
 
