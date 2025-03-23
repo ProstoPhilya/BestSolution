@@ -1,3 +1,5 @@
+package org.CustomClass.Enums;
+
 // Перечисление для объема бочки
 public enum BarrelVolume {
     SMALL(10.0),   // Маленькая бочка (10 литров)
