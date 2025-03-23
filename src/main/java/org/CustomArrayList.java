@@ -1,18 +1,20 @@
 package org;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class CustomArrayList<T> {
-    private Object[] array;
+public class CustomArrayList<T> implements Iterable<T> {
+    private Object[] elements;
     private int size = 10;
     private int capacity = 0;
 
     public CustomArrayList() {
-        array = new Object[size];
+        elements = new Object[size];
     }
 
     public CustomArrayList(int size) {
-        array = new Object[size];
+        elements = new Object[size];
         this.size = size;
     }
 
@@ -22,17 +24,17 @@ public class CustomArrayList<T> {
 
     public T get(int index) {
         indexValidation(index);
-        return (T) array[index];
+        return (T) elements[index];
     }
 
     public void add(T elemet) {
         if (capacity + 1 == size) resize();
-        array[capacity++] = elemet;
+        elements[capacity++] = elemet;
     }
 
     public void set(int index, T element) {
         indexValidation(index);
-        array[index] = element;
+        elements[index] = element;
     }
 
     public void remove(int index) {
@@ -40,15 +42,15 @@ public class CustomArrayList<T> {
 
         if (index != capacity) {
             for (int i = index; i < capacity - 1; i++) {
-                array[i] = array[i + 1];
+                elements[i] = elements[i + 1];
             }
         }
-        array[capacity--] = null;
+        elements[capacity--] = null;
     }
 
     private void resize() {
         int newSize = size + (size >> 1);
-        array = Arrays.copyOf(array, newSize);
+        elements = Arrays.copyOf(elements, newSize);
         size = newSize;
     }
 
@@ -60,10 +62,9 @@ public class CustomArrayList<T> {
         System.out.println(this);
     }
 
-    //  объекты выводятся построчно
     public void println() {
         for (int i = 0; i < capacity; i++) {
-            System.out.print(array[i]);
+            System.out.print(elements[i]);
             if (i < capacity - 1)
                 System.out.println(", ");
         }
@@ -76,6 +77,17 @@ public class CustomArrayList<T> {
         }
     }
 
+    public void clear() {
+        while (capacity != 0) {
+            elements[capacity--] = null;
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new CustomIterator();
+    }
+
     @Override
     public String toString() {
         if (capacity == 0) {
@@ -83,15 +95,42 @@ public class CustomArrayList<T> {
         }
         StringBuilder sb = new StringBuilder();
         sb.append('[');
-
         for (int i = 0; i < capacity; i++) {
-            sb.append(array[i]);
+            sb.append(elements[i]);
             if (i < capacity - 1) {
                 sb.append(", ");
             }
         }
-
         sb.append(']');
         return sb.toString();
+    }
+
+    private class CustomIterator implements Iterator<T> {
+        private int currentIndex = 0;
+        private boolean canRemove = false;
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < capacity;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            canRemove = true;
+            return (T) elements[currentIndex++];
+        }
+
+        @Override
+        public void remove() {
+            if (!canRemove) {
+                throw new IllegalStateException("метод next() должен быть вызван перед remove()");
+            }
+            CustomArrayList.this.remove(currentIndex - 1);
+            currentIndex--;
+            canRemove = false;
+        }
     }
 }
