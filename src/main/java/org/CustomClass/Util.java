@@ -61,4 +61,11 @@ public final class Util {
 
         return true;
     }
+
+    public static boolean isDoubleValid(double volume) {
+        
+    }
+
+    public static Boolean comparingDouble(Object getVolume) {
+    }
 }
