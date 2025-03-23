@@ -2,9 +2,17 @@ package org.CustomClass;
 
 import org.CustomClass.Enums.Gender;
 
-import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Comparator;
 
-public class Human {
+public class Human extends BasicClass implements Serializable, Comparable<Human> {
     private Gender gender;
     private int age;
     private String surname;
@@ -15,42 +23,16 @@ public class Human {
         this.surname = builder.surname;
     }
 
-    public static Human fromString(String data) {
-        String[] parts = data.split(",");
-        if (parts.length != 3) {
-            throw new IllegalArgumentException("Неверный формат данных");
-        }
-
-        try {
-            Gender gender = Gender.fromValue(parts[0].trim());
-            int age = Integer.parseInt(parts[1].trim());
-            String surname = parts[2].trim();
-
-            return new HumanBuilder()
-                    .setGender(gender)
-                    .setAge(age)
-                    .setSurname(surname)
-                    .build();
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Неверный формат данных", e);
-        }
+    public Gender getGender() {
+        return gender;
     }
 
-    public static Human fromUserInput(Scanner scanner) {
-        System.out.println("Введите пол (Мужской, Женский):");
-        Gender gender = Gender.fromValue(scanner.nextLine().trim());
+    public int getAge() {
+        return age;
+    }
 
-        System.out.println("Введите возраст:");
-        int age = Integer.parseInt(scanner.nextLine().trim());
-
-        System.out.println("Введите фамилию:");
-        String surname = scanner.nextLine().trim();
-
-        return new HumanBuilder()
-                .setGender(gender)
-                .setAge(age)
-                .setSurname(surname)
-                .build();
+    public String getSurname() {
+        return surname;
     }
 
     @Override
@@ -60,6 +42,27 @@ public class Human {
                 ", age=" + age +
                 ", surname='" + surname + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return Comparator.comparing(Human::getGender)
+                .thenComparingInt(Human::getAge)
+                .thenComparing(Human::getSurname)
+                .compare(this, o);
+    }
+
+    @Override
+    public void saveToFile(String fileName) throws IOException {
+        String data = String.format("%s,%d,%s\n", gender.getValue(), age, surname);
+
+        Path path = Paths.get(fileName);
+
+        Files.createDirectories(path.getParent());
+
+        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+            writer.write(data);
+        }
     }
 
     public static class HumanBuilder {
@@ -89,9 +92,7 @@ public class Human {
             if (!Util.isIntValid(age)) {
                 throw new IllegalArgumentException("Возраст не может быть отрицательным");
             }
-            if (!Util.isStringValid(surname)) {
-                throw new IllegalArgumentException("Фамилия должна быть установлена");
-            }
+
             return new Human(this);
         }
     }
