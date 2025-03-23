@@ -1,9 +1,6 @@
 package org.CustomClass;
 
-import java.io.*;
-import java.util.Objects;
-
-public class Animal implements Serializable, Comparable<Animal> {
+public class Animal extends Basic {
     private static final Long serialVersionUID = 1L;
     private String species;
     private String eyeColor;
@@ -33,6 +30,11 @@ public class Animal implements Serializable, Comparable<Animal> {
         return age;
     }
 
+    @Override
+    public int getIntValue() {
+        return age;
+    }
+
     public void validate() {
         if (!Util.isStringValid(species)) throw new IllegalArgumentException("Поле вид заполненно неправильно.");
         if (!Util.isStringValid(eyeColor)) throw new IllegalArgumentException("Цвет глаз заполнен неправильно.");
@@ -40,14 +42,15 @@ public class Animal implements Serializable, Comparable<Animal> {
     }
 
     @Override
-    public int compareTo(Animal o) {
-        int comparison = Util.comparingString(Animal::getSpecies).compare(this, o);
+    public int compareTo(Basic o) {
+        Animal other = (Animal) o;
+        int comparison = Util.comparingString(Animal::getSpecies).compare(this, other);
         if (comparison != 0) return comparison;
 
-        comparison = Util.comparingString(Animal::getEyeColor).compare(this, o);
+        comparison = Util.comparingString(Animal::getEyeColor).compare(this, other);
         if (comparison != 0) return comparison;
 
-        return Util.comparingBoolean(Animal::isWool).compare(this, o);
+        return Util.comparingBoolean(Animal::isWool).compare(this, other);
     }
 
     @Override
@@ -59,7 +62,6 @@ public class Animal implements Serializable, Comparable<Animal> {
                 ", age=" + age +
                 '}';
     }
-
 
     public static class Builder {
         private String species;

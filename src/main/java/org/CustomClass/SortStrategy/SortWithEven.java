@@ -1,6 +1,6 @@
 package org.CustomClass.SortStrategy;
 
-import org.execution.CustomArrayList;
+import org.CustomArrayList;
 
 import java.util.function.Function;
 

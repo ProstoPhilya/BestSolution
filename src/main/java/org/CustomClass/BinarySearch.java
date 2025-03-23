@@ -1,6 +1,6 @@
 package org.CustomClass;
 
-import org.execution.CustomArrayList;
+import org.CustomArrayList;
 
 public final class BinarySearch {
 
