@@ -1,6 +1,6 @@
-package org.CustomClass.SortStrategy;
+package org.owlTeam.SortStrategy;
 
-import org.CustomArrayList;
+import org.owlTeam.CustomArrayList;
 
 import java.util.function.Function;
 

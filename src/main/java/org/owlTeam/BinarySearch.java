@@ -1,6 +1,4 @@
-package org.CustomClass;
-
-import org.CustomArrayList;
+package org.owlTeam;
 
 public final class BinarySearch {
 

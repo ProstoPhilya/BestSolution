@@ -1,8 +1,8 @@
-package org.CustomClass.factory;
+package org.owlTeam.entityClass.factory;
 
-import org.CustomArrayList;
-import org.CustomClass.Animal;
-import org.CustomClass.Basic;
+import org.owlTeam.CustomArrayList;
+import org.owlTeam.entityClass.Animal;
+import org.owlTeam.entityClass.Basic;
 
 import java.io.*;
 import java.util.Random;

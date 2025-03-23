@@ -1,6 +1,6 @@
-package org.CustomClass.factory;
+package org.owlTeam.entityClass.factory;
 
-import org.CustomArrayList;
+import org.owlTeam.CustomArrayList;
 
 import java.io.IOException;
 import java.util.Scanner;

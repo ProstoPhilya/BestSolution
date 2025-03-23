@@ -1,4 +1,4 @@
-package org;
+package org.owlTeam;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -54,8 +54,8 @@ public class CustomArrayList<T> implements Iterable<T> {
         size = newSize;
     }
 
-    public boolean isEmpty() {
-        return capacity == 0;
+    public boolean isNotEmpty() {
+        return capacity != 0;
     }
 
     public void print() {
@@ -103,6 +103,15 @@ public class CustomArrayList<T> implements Iterable<T> {
         }
         sb.append(']');
         return sb.toString();
+    }
+
+    public int indexOf(T element) {
+        for (int i = 0; i < size; i++) {
+            if (elements[i].equals(element)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     private class CustomIterator implements Iterator<T> {

@@ -1,4 +1,4 @@
-package org.CustomClass;
+package org.owlTeam.entityClass;
 
 import java.io.Serializable;
 
