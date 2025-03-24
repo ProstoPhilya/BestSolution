@@ -1,30 +1,29 @@
-package org.CustomClass.factory;
+package org.owlTeam.entityClass.factory;
 
-import org.CustomClass.BasicClass;
-import org.execution.CustomArrayList;
-import org.CustomClass.Animal;
+import org.owlTeam.CustomArrayList;
+import org.owlTeam.entityClass.Animal;
+import org.owlTeam.entityClass.Basic;
 
 import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
 
-public class AnimalFactory implements FactoryStrategy<BasicClass> {
+public class AnimalFactory implements FactoryStrategy<Basic> {
     @Override
-    public CustomArrayList<BasicClass> fromFile(String fileName, int size) throws IOException, ClassNotFoundException {
-        CustomArrayList<BasicClass> arrayList = new CustomArrayList<>(size);
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
+    public CustomArrayList<Basic> fromFile(String fileName, int size) throws IOException, ClassNotFoundException {
+        CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
 
-                Animal animal = new Animal.Builder()
-                        .species(parts[0])
-                        .eyeColor(parts[1])
-                        .wool(Boolean.parseBoolean(parts[2]))
-                        .age(Integer.parseInt(parts[3]))
-                        .build();
-                arrayList.add(animal);
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            for (int i = 0; i < size; i++) {
+                Object object = ois.readObject();
+                if (object instanceof Animal){
+                    Animal animal = (Animal) object;
+                    animal.validate();
+                    arrayList.add(animal);
+                }
             }
+        } catch (StreamCorruptedException e){
+        } catch (EOFException e) {
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,9 +32,9 @@ public class AnimalFactory implements FactoryStrategy<BasicClass> {
     }
 
     @Override
-    public CustomArrayList<BasicClass> fromGenerator(int size) {
+    public CustomArrayList<Basic> fromGenerator(int size) {
         Random random = new Random();
-        CustomArrayList<BasicClass> arrayList = new CustomArrayList<>(size);
+        CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
         String[] species = {"Собака", "Кот", "Слон", "Птица", "Лев"};
         String[] eyeColors = {"Белый", "Черный", "Рыжий", "Серый", "Коричневый"};
 
@@ -43,8 +42,7 @@ public class AnimalFactory implements FactoryStrategy<BasicClass> {
             String specie = species[random.nextInt(species.length)];
             String eyeColor = eyeColors[random.nextInt(eyeColors.length)];
             boolean isWool = random.nextBoolean();
-            int age = random.nextInt(31);
-
+            int age = random.nextInt(1,31);
             arrayList.add(new Animal.Builder()
                     .species(specie)
                     .eyeColor(eyeColor)
@@ -56,13 +54,14 @@ public class AnimalFactory implements FactoryStrategy<BasicClass> {
     }
 
     @Override
-    public CustomArrayList<BasicClass> fromConsole(Scanner scanner, int size) {
-        CustomArrayList<BasicClass> arrayList = new CustomArrayList<>(size);
+    public CustomArrayList<Basic> fromConsole(Scanner scanner, int size) {
+        CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
             System.out.println("Создание Животного:");
             System.out.print("Введите вид Животного: ");
             String species = scanner.nextLine();
+
 
             System.out.print("Введите цвет глаз Животного: ");
             String eyeColor = scanner.nextLine();
@@ -71,7 +70,7 @@ public class AnimalFactory implements FactoryStrategy<BasicClass> {
             boolean isWool = scanner.nextBoolean();
             scanner.nextLine();
 
-            System.out.print("Введите возраст животного: ");
+            System.out.print("Введите взраст животного: ");
             int age = scanner.nextInt();
             scanner.nextLine();
 

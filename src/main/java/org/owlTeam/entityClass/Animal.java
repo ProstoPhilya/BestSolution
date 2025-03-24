@@ -1,13 +1,6 @@
-package org.CustomClass;
+package org.owlTeam.entityClass;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Objects;
-
-public class Animal extends BasicClass implements Serializable, Comparable<Animal> {
-    private static final Long serialVersionUID = 1L;
+public class Animal extends Basic {
     private String species;
     private String eyeColor;
     private boolean isWool;
@@ -36,6 +29,11 @@ public class Animal extends BasicClass implements Serializable, Comparable<Anima
         return age;
     }
 
+    @Override
+    public int getIntValue() {
+        return age;
+    }
+
     public void validate() {
         if (!Util.isStringValid(species)) throw new IllegalArgumentException("Поле вид заполненно неправильно.");
         if (!Util.isStringValid(eyeColor)) throw new IllegalArgumentException("Цвет глаз заполнен неправильно.");
@@ -43,14 +41,15 @@ public class Animal extends BasicClass implements Serializable, Comparable<Anima
     }
 
     @Override
-    public int compareTo(Animal o) {
-        int comparison = Util.comparingString(Animal::getSpecies).compare(this, o);
+    public int compareTo(Basic o) {
+        Animal other = (Animal) o;
+        int comparison = Util.comparingString(Animal::getSpecies).compare(this, other);
         if (comparison != 0) return comparison;
 
-        comparison = Util.comparingString(Animal::getEyeColor).compare(this, o);
+        comparison = Util.comparingString(Animal::getEyeColor).compare(this, other);
         if (comparison != 0) return comparison;
 
-        return Util.comparingBoolean(Animal::isWool).compare(this, o);
+        return Util.comparingBoolean(Animal::isWool).compare(this, other);
     }
 
     @Override
@@ -61,17 +60,6 @@ public class Animal extends BasicClass implements Serializable, Comparable<Anima
                 ", isWool=" + isWool + '\'' +
                 ", age=" + age +
                 '}';
-    }
-
-    @Override
-    public void saveToFile(String fileName) throws IOException {
-        String data = String.format("%s,%s,%b,%d\n", species, eyeColor, isWool, age);
-        Path path = Paths.get(fileName);
-        if (!Files.exists(path)) Files.createFile(path);
-
-        try (FileWriter writer = new FileWriter(path.toFile(), true)) {
-            writer.write(data);
-        }
     }
 
     public static class Builder {

@@ -1,4 +1,4 @@
-package org.CustomClass.Enums;
+package org.owlTeam.entityClass.enums;
 
 public enum Material {
     STEEL("Сталь"),
