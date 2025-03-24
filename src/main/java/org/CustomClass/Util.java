@@ -1,4 +1,4 @@
-package org.owlTeam.entityClass;
+package org.CustomClass;
 
 import java.util.Comparator;
 import java.util.function.Function;

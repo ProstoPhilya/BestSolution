@@ -1,4 +1,4 @@
-package org.owlTeam.entityClass.enums;
+package org.CustomClass.Enums;
 
 public enum EyeColor {
     BLACK("Black"),

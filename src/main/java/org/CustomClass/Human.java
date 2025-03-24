@@ -1,6 +1,6 @@
-package org.owlTeam.entityClass;
+package org.CustomClass;
 
-import org.owlTeam.entityClass.enums.Gender;
+import org.CustomClass.Enums.Gender;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
