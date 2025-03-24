@@ -54,7 +54,7 @@ public class Main {
                 userCommand = scanner.nextInt();
                 switch (userCommand){
                     case 0:
-                        System.out.println("Статус ");
+                        System.out.println("Статус: ");
                         status();
                         break;
                     case 1:

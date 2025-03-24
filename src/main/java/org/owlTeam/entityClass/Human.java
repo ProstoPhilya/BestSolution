@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Comparator;
 
-public class Human extends BasicClass implements Serializable, Comparable<Human> {
+public class Human extends Basic implements Serializable, Comparable<Human> {
     private Gender gender;
     private int age;
     private String surname;

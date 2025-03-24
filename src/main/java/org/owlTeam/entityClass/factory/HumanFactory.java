@@ -1,18 +1,18 @@
-package org.CustomClass.factory;
+package org.owlTeam.entityClass.factory;
 
-import org.CustomClass.BasicClass;
-import org.CustomClass.Enums.Gender;
-import org.CustomClass.Human;
-import org.execution.CustomArrayList;
+import org.owlTeam.CustomArrayList;
+import org.owlTeam.entityClass.Basic;
+import org.owlTeam.entityClass.Human;
+import org.owlTeam.entityClass.enums.Gender;
 
 import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
 
-public class HumanFactory implements FactoryStrategy<BasicClass> {
+public class HumanFactory implements FactoryStrategy<Basic> {
     @Override
-    public CustomArrayList<BasicClass> fromFile(String fileName, int size) throws IOException, ClassNotFoundException {
-        CustomArrayList<BasicClass> arrayList = new CustomArrayList<>(size);
+    public CustomArrayList<Basic> fromFile(String fileName, int size) throws IOException, ClassNotFoundException {
+        CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -32,9 +32,9 @@ public class HumanFactory implements FactoryStrategy<BasicClass> {
     }
 
     @Override
-    public CustomArrayList<BasicClass> fromGenerator(int size) {
+    public CustomArrayList<Basic> fromGenerator(int size) {
         Random random = new Random();
-        CustomArrayList<BasicClass> arrayList = new CustomArrayList<>(size);
+        CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
         String[] surnames = {"Иванов", "Петров", "Сидоров", "Эйхольс", "Львов"};
         Gender[] genders = Gender.values();
 
@@ -53,8 +53,8 @@ public class HumanFactory implements FactoryStrategy<BasicClass> {
     }
 
     @Override
-    public CustomArrayList<BasicClass> fromConsole(Scanner scanner, int size) {
-        CustomArrayList<BasicClass> arrayList = new CustomArrayList<>(size);
+    public CustomArrayList<Basic> fromConsole(Scanner scanner, int size) {
+        CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
             System.out.println("Создание Человека:");
