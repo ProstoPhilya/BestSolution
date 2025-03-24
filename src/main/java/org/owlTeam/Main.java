@@ -143,11 +143,15 @@ public class Main {
                         break;
                     case 41:
                         System.out.println("Insert Sort нечетных классов");
+                        if (arrayList != null && arrayList.isNotEmpty()) {
+                            SortStrategy.sortByCondition(arrayList,x -> x % 2 != 0, Basic::getIntValue);
+                        }
+                        status();
                         break;
                     case 42:
                         System.out.println("Insert Sort четных классов");
                         if (arrayList != null && arrayList.isNotEmpty()) {
-                            SortStrategy.sortEven(arrayList, Basic::getIntValue);
+                            SortStrategy.sortByCondition(arrayList,x -> x % 2 == 0, Basic::getIntValue);
                         }
                         status();
                         break;
