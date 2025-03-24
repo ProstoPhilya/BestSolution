@@ -3,13 +3,13 @@ package org.owlTeam.entityClass;
 public class Animal extends Basic {
     private String species;
     private String eyeColor;
-    private boolean isWool;
+    private boolean furry;
     private int age;
 
     private Animal(Builder builder) {
         this.species = builder.species;
         this.eyeColor = builder.eyeColor;
-        this.isWool = builder.isWool;
+        this.furry = builder.furry;
         this.age = builder.age;
     }
 
@@ -22,7 +22,7 @@ public class Animal extends Basic {
     }
 
     public boolean isWool() {
-        return isWool;
+        return furry;
     }
 
     public int getAge() {
@@ -55,9 +55,9 @@ public class Animal extends Basic {
     @Override
     public String toString() {
         return "Animal{" +
-                "species='" + species + '\'' +
-                ", eyeColor='" + eyeColor + '\'' +
-                ", isWool=" + isWool + '\'' +
+                "Вид='" + species + '\'' +
+                ", Цвет глаз='" + eyeColor + '\'' +
+                ", Пушистый=" + furry + '\'' +
                 ", age=" + age +
                 '}';
     }
@@ -65,7 +65,7 @@ public class Animal extends Basic {
     public static class Builder {
         private String species;
         private String eyeColor;
-        private boolean isWool;
+        private boolean furry;
         private int age;
 
         public Builder() {}
@@ -80,8 +80,8 @@ public class Animal extends Basic {
             return this;
         }
 
-        public Builder wool(boolean wool) {
-            isWool = wool;
+        public Builder fur(boolean fur) {
+            furry = fur;
             return this;
         }
 

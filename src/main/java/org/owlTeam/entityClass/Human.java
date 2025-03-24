@@ -2,17 +2,7 @@ package org.owlTeam.entityClass;
 
 import org.owlTeam.entityClass.enums.Gender;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.Comparator;
-
-public class Human extends Basic implements Serializable, Comparable<Human> {
+public class Human extends Basic {
     private Gender gender;
     private int age;
     private String surname;
@@ -45,24 +35,18 @@ public class Human extends Basic implements Serializable, Comparable<Human> {
     }
 
     @Override
-    public int compareTo(Human o) {
-        return Comparator.comparing(Human::getGender)
-                .thenComparingInt(Human::getAge)
-                .thenComparing(Human::getSurname)
-                .compare(this, o);
+    public void validate() {
+
     }
 
     @Override
-    public void saveToFile(String fileName) throws IOException {
-        String data = String.format("%s,%d,%s\n", gender.getValue(), age, surname);
+    public int getIntValue() {
+        return 0;
+    }
 
-        Path path = Paths.get(fileName);
-
-        Files.createDirectories(path.getParent());
-
-        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-            writer.write(data);
-        }
+    @Override
+    public int compareTo(Basic o) {
+        return 0;
     }
 
     public static class HumanBuilder {

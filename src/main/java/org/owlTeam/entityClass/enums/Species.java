@@ -1,10 +1,10 @@
 package org.owlTeam.entityClass.enums;
 
 public enum Species {
-    DOG("Dog"),
-    CAT("Cat"),
-    BIRD("Bird"),
-    FISH("Fish");
+    DOG("Собака"),
+    CAT("Кот"),
+    BIRD("Птица"),
+    FISH("Рыба");
 
     private final String name;
 

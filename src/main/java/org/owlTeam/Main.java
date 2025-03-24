@@ -11,8 +11,8 @@ public class Main {
     private static CustomArrayList<Basic> arrayList = null;
     private static CustomArrayList<Basic> binarySearchResult = new CustomArrayList<>();
 
-    private static void soutMenu(){
-        System.out.println("0 - Вывести массив и найденные элементы");
+    private static void outMenu(){
+        System.out.println("0 - Выход");
         System.out.println("1 - Указать размер массива");
         System.out.println("10 - Заполнить массив Animal с файла");
         System.out.println("\t11 - Заполнить массив Animal случайно");
@@ -28,11 +28,12 @@ public class Main {
         System.out.println("\t41 - Отсортировать нечётные классы массива");
         System.out.println("\t42 - Отсортировать чётные классы массива");
         System.out.println("5 - Поиск нужного класса в массиве");
-        System.out.println("6 - Записать отсортированный массив в файл");
+        System.out.println("6 - Записать массив в файл");
+        System.out.println("6 - Записать результат бинарного поиска в файл");
 
 
-        System.out.println("7 - показать список комманд");
-        System.out.println("8 - Выход");
+        System.out.println("7 - Вывести массив и найденные элементы");
+        System.out.println("8 - показать список комманд");
         System.out.print("Готов к вводу");
     }
 
@@ -46,16 +47,16 @@ public class Main {
         AnimalFactory animalFactory = new AnimalFactory();
 
         System.out.println("Введите команду:");
-        soutMenu();
+        outMenu();
 
         try {
             while (running) {
                 System.out.print("->");
                 userCommand = scanner.nextInt();
+                scanner.nextLine();
                 switch (userCommand){
                     case 0:
-                        System.out.println("Статус: ");
-                        status();
+                        running = false;
                         break;
                     case 1:
                         System.out.print("Размер массива = ");
@@ -156,11 +157,10 @@ public class Main {
                         status();
                         break;
                     case 5:
-                        System.out.println("Поиск объекта");
-                        scanner.nextLine();
                         if (arrayList.isNotEmpty()) {
                             switch (arrayList.get(0)) {
                                 case Animal a:
+                                    System.out.println("Задайте искомое животное");
                                     Basic searchElement = animalFactory.fromConsole(scanner, 1).get(0);
                                     Basic element = BinarySearch.search(arrayList, searchElement);
                                     if (element != null) {
@@ -183,7 +183,8 @@ public class Main {
                             SaveToFile.save(fileName, arrayList);
                         }
                         break;
-                    case 7:
+
+                    case 61:
                         System.out.print("Укажите файл: ");
                         fileName = scanner.next();
                         if (binarySearchResult.isNotEmpty()) {
@@ -191,11 +192,14 @@ public class Main {
                             binarySearchResult.clear();
                         }
                         break;
+                    case 7:
+                        System.out.println("Статус: ");
+                        status();
+                        break;
                     case 8:
-                        soutMenu();
+                        outMenu();
                         break;
                     case 9:
-                        running = false;
                         break;
                     default:
                         System.out.println("Недопустимая команда повторите ввод");
