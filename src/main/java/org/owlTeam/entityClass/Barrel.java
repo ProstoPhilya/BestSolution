@@ -1,6 +1,6 @@
-package org.CustomClass;
+package org.owlTeam.entityClass;
 
-import org.CustomClass.Enums.StoredMaterial;
+import org.owlTeam.entityClass.enums.StoredMaterial;
 
 public class Barrel extends Basic {
     private static final Long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package org.CustomClass.Enums;
+package org.owlTeam.entityClass.enums;
 
 // Перечисление для объема бочки
 public enum BarrelVolume {

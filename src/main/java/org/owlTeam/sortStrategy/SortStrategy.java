@@ -1,6 +1,6 @@
-package org.CustomClass.SortStrategy;
+package org.owlTeam.sortStrategy;
 
-import org.CustomClass.CustomArrayList;
+import org.owlTeam.CustomArrayList;
 
 public final class SortStrategy {
     public static <T extends Comparable<T>> void sort(CustomArrayList<T> items) {

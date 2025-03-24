@@ -1,4 +1,6 @@
-package org.CustomClass;
+package org.owlTeam;
+
+import org.owlTeam.entityClass.Basic;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
