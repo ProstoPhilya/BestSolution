@@ -6,6 +6,7 @@ import org.owlTeam.entityClass.Human;
 import org.owlTeam.entityClass.factory.AnimalFactory;
 import org.owlTeam.entityClass.factory.HumanFactory;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -55,16 +56,12 @@ public class Main {
         System.out.println("Введите команду:");
         outMenu();
 
-        try {
             while (running) {
+                try {
                 System.out.print("->");
                 userCommand = scanner.nextInt();
                 scanner.nextLine();
-                if (!scanner.hasNextInt()){
-                    System.out.println("Введён некоректный формат команды.\n" +
-                                        "Используйте целые числа.");
-                }
-                switch (userCommand){
+                    switch (userCommand){
                     case 0:
                         running = false;
                         break;
@@ -200,10 +197,10 @@ public class Main {
                     case 6:
                         if (arrayList != null && arrayList.isNotEmpty()) {
                             System.out.print("Укажите файл: ");
-                            fileName = scanner.next();
+                            fileName = defaultPathForAnimal + scanner.next();
                             switch (arrayList.get(0)){
                                 case Animal e:
-                                    SaveToFile.save(defaultPathForAnimal + fileName, arrayList);
+                                    SaveToFile.save(fileName, arrayList);
                                     break;
                                 default:
                                     System.out.println("Этот тип не включён");
@@ -224,9 +221,13 @@ public class Main {
                         System.out.println("Недопустимая команда повторите ввод");
                         break;
                 }
+                } catch (InputMismatchException e) {
+                    System.out.println("Введён некоректный формат команды.\n" +
+                            "Используйте целые числа!");
+                    scanner.nextLine();
+                } catch (Exception e) {
+                    e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         scanner.close();
     }
