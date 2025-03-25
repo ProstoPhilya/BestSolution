@@ -49,6 +49,9 @@ public class Animal extends Basic {
         comparison = Util.comparingString(Animal::getEyeColor).compare(this, other);
         if (comparison != 0) return comparison;
 
+        comparison = Util.comparingInt(Animal::getAge).compare(this, other);
+        if (comparison != 0) return comparison;
+
         return Util.comparingBoolean(Animal::isWool).compare(this, other);
     }
 
@@ -57,8 +60,8 @@ public class Animal extends Basic {
         return "Animal{" +
                 "Вид='" + species + '\'' +
                 ", Цвет глаз='" + eyeColor + '\'' +
-                ", Пушистый=" + furry + '\'' +
                 ", age=" + age +
+                ", Пушистый=" + furry + '\'' +
                 '}';
     }
 

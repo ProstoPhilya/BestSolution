@@ -17,13 +17,7 @@ public final class Util {
             boolean key1 = keyExtractor.apply(o1);
             boolean key2 = keyExtractor.apply(o2);
 
-            if (key1 == key2) {
-                return 0;
-            } else if (key1 && !key2) {
-                return 1;
-            } else {
-                return -1;
-            }
+            return (key1 == key2) ? 0 : (key1 ? 1 : -1);
         };
     }
 
@@ -31,17 +25,11 @@ public final class Util {
         return (o1, o2) -> {
             String key1 = keyExtractor.apply(o1);
             String key2 = keyExtractor.apply(o2);
-            int minLength = Math.min(key1.length(), key2.length());
 
-            for (int i = 0; i < minLength; i++) {
-                char c1 = key1.charAt(i);
-                char c2 = key2.charAt(i);
+            key1 = key1.toLowerCase();
+            key2 = key2.toLowerCase();
 
-                if (c1 != c2)
-                    return c1 - c2;
-            }
-
-            return key1.length() - key2.length();
+            return key1.compareTo(key2);
         };
     }
 
