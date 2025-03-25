@@ -63,4 +63,12 @@ public final class Util {
     public static <E extends Enum<E>> boolean isEnumValid(E value) {
         return value != null;
     }
+
+    public static boolean isDoubleValid(double volume) {
+        return volume > 0 && volume <= 100;
+    }
+
+    public static Boolean comparingDouble(Object getVolume) {
+        return null;
+    }
 }
