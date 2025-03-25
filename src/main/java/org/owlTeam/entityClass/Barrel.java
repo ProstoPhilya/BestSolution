@@ -4,13 +4,13 @@ import org.owlTeam.entityClass.enums.StoredMaterial;
 
 public class Barrel extends Basic {
     private static final Long serialVersionUID = 1L;
-    private double volume;          // Объем бочки
-    private StoredMaterial storedMaterial;  // Теперь это enum
-    private String material;        // Материал бочки
+    private double volume;
+    private String storedMaterial;  // Теперь строка
+    private String material;
 
     private Barrel(Builder builder) {
         this.volume = builder.volume;
-        this.storedMaterial = builder.storedMaterial;  // Храним enum
+        this.storedMaterial = builder.storedMaterial;
         this.material = builder.material;
     }
 
@@ -18,16 +18,14 @@ public class Barrel extends Basic {
         return volume;
     }
 
-    // Возвращаем имя материала из enum
     public String getStoredMaterial() {
-        return storedMaterial != null ? storedMaterial.getMaterialName() : null;
+        return storedMaterial;
     }
 
     public String getMaterial() {
         return material;
     }
 
-    // Остальные методы остаются без изменений
     @Override
     public int getIntValue() {
         return (int) volume;
@@ -35,7 +33,7 @@ public class Barrel extends Basic {
 
     public void validate() {
         if (!Util.isDoubleValid(volume)) throw new IllegalArgumentException("Объем заполнен неправильно.");
-        if (storedMaterial == null) throw new IllegalArgumentException("Хранимый материал не указан.");
+        if (!Util.isStringValid(storedMaterial)) throw new IllegalArgumentException("Хранимый материал не указан.");
         if (!Util.isStringValid(material)) throw new IllegalArgumentException("Материал бочки заполнен неправильно.");
     }
 
@@ -58,14 +56,14 @@ public class Barrel extends Basic {
     public String toString() {
         return "Barrel{" +
                 "volume=" + volume +
-                ", storedMaterial=" + (storedMaterial != null ? storedMaterial.getMaterialName() : "null") +
+                ", storedMaterial='" + storedMaterial + '\'' +
                 ", material='" + material + '\'' +
                 '}';
     }
 
     public static class Builder {
         private double volume;
-        private StoredMaterial storedMaterial;
+        private String storedMaterial;
         private String material;
 
         public Builder() {}
@@ -75,7 +73,7 @@ public class Barrel extends Basic {
             return this;
         }
 
-        public Builder setStoredMaterial(StoredMaterial storedMaterial) {
+        public Builder setStoredMaterial(String storedMaterial) {
             this.storedMaterial = storedMaterial;
             return this;
         }
@@ -87,7 +85,7 @@ public class Barrel extends Basic {
 
         public Barrel build() {
             if (!Util.isDoubleValid(volume)) throw new IllegalArgumentException("Объем заполнен неправильно.");
-            if (storedMaterial == null) throw new IllegalArgumentException("Хранимый материал не указан.");
+            if (!Util.isStringValid(storedMaterial)) throw new IllegalArgumentException("Хранимый материал не указан.");
             if (!Util.isStringValid(material)) throw new IllegalArgumentException("Материал бочки заполнен неправильно.");
             return new Barrel(this);
         }

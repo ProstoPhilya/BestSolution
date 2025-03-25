@@ -47,7 +47,7 @@ public class BarrelFactory implements FactoryStrategy<Basic> {
 
             arrayList.add(new Barrel.Builder()
                     .setVolume(volume)
-                    .setStoredMaterial(randomMaterial)  // Правильный вызов
+                    .setStoredMaterial(randomMaterial.getMaterialName())  // Используем строковое представление
                     .setMaterial(randomMaterial.getMaterialName())
                     .build());
         }
@@ -65,22 +65,16 @@ public class BarrelFactory implements FactoryStrategy<Basic> {
             scanner.nextLine();
 
             System.out.print("Введите хранимый материал (Дерево/Металл/Пластик/Стекло/Камень): ");
-            String storedMaterialStr = scanner.nextLine();
+            String storedMaterial = scanner.nextLine();
 
             System.out.print("Введите материал бочки: ");
             String material = scanner.nextLine();
 
-            try {
-                StoredMaterial storedMaterial = StoredMaterial.fromString(storedMaterialStr);
-                arrayList.add(new Barrel.Builder()
-                        .setVolume(volume)
-                        .setStoredMaterial(storedMaterial)
-                        .setMaterial(material)
-                        .build());
-            } catch (IllegalArgumentException e) {
-                System.err.println("Ошибка: неверный материал. Используйте Дерево, Металл, Пластик, Стекло или Камень.");
-                i--; // Повторяем итерацию
-            }
+            arrayList.add(new Barrel.Builder()
+                    .setVolume(volume)
+                    .setStoredMaterial(storedMaterial)
+                    .setMaterial(material)
+                    .build());
         }
         return arrayList;
     }
