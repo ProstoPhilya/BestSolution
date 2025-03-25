@@ -4,7 +4,7 @@ import org.CustomClass.CustomArrayList;
 import org.CustomClass.Barrel;
 import org.CustomClass.Basic;
 import org.CustomClass.Enums.BarrelVolume;
-import org.CustomClass.Enums.storedMaterial;
+import org.CustomClass.Enums.StoredMaterial;
 
 import java.io.*;
 import java.util.Random;
@@ -40,18 +40,16 @@ public class BarrelFactory implements FactoryStrategy<Basic> {
     public CustomArrayList<Basic> fromGenerator(int size) {
         Random random = new Random();
         CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
-        BarrelVolume[] volumes = BarrelVolume.values(); // Все доступные объемы
-        storedMaterial[] materials = storedMaterial.values();
+        StoredMaterial[] materials = StoredMaterial.values();
 
         for (int i = 0; i < size; i++) {
-            String material = String.valueOf(materials[random.nextInt(materials.length)]);
-            String storedMaterial = storedMaterial[random.nextInt(storedMaterial.length())];
-            double volume = random.nextDouble() * 100; // Объем от 0 до 100
+            StoredMaterial randomMaterial = materials[random.nextInt(materials.length)];
+            double volume = 10 + random.nextDouble() * 90;
 
             arrayList.add(new Barrel.Builder()
                     .setVolume(volume)
-                    .toString()
-                    .strip(material)
+                    .setStoredMaterial(randomMaterial)  // Правильный вызов
+                    .setMaterial(randomMaterial.getMaterialName())
                     .build());
         }
         return arrayList;
@@ -65,19 +63,25 @@ public class BarrelFactory implements FactoryStrategy<Basic> {
             System.out.println("Создание бочки " + (i + 1) + ":");
             System.out.print("Введите объем: ");
             double volume = scanner.nextDouble();
-            scanner.nextLine(); // Очистка буфера
+            scanner.nextLine();
 
-            System.out.print("Введите хранимый материал: ");
-            String storedMaterial = scanner.nextLine();
+            System.out.print("Введите хранимый материал (Дерево/Металл/Пластик/Стекло/Камень): ");
+            String storedMaterialStr = scanner.nextLine();
 
             System.out.print("Введите материал бочки: ");
             String material = scanner.nextLine();
 
-            arrayList.add(new Barrel.Builder()
-                    .setVolume(volume)
-                    .toString(storedMaterial)
-                    .setMaterial(material)
-                    .build());
+            try {
+                StoredMaterial storedMaterial = StoredMaterial.fromString(storedMaterialStr);
+                arrayList.add(new Barrel.Builder()
+                        .setVolume(volume)
+                        .setStoredMaterial(storedMaterial)
+                        .setMaterial(material)
+                        .build());
+            } catch (IllegalArgumentException e) {
+                System.err.println("Ошибка: неверный материал. Используйте Дерево, Металл, Пластик, Стекло или Камень.");
+                i--; // Повторяем итерацию
+            }
         }
         return arrayList;
     }

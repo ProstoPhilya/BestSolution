@@ -17,4 +17,8 @@ public enum BarrelVolume {
     public double getVolume() {
         return volume;
     }
+
+    public double getValue() {
+        return 0;
+    }
 }
