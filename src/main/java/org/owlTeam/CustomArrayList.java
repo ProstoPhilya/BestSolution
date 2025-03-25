@@ -1,4 +1,6 @@
-package org.CustomClass;
+package org.owlTeam;
+
+import org.owlTeam.entityClass.Barrel;
 
 import java.util.Arrays;
 import java.util.Iterator;

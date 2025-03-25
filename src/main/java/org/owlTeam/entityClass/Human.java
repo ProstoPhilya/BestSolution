@@ -2,7 +2,9 @@ package org.owlTeam.entityClass;
 
 import org.owlTeam.entityClass.enums.Gender;
 
-public class Human extends Basic {
+import java.util.Scanner;
+
+public class Human {
     private Gender gender;
     private int age;
     private String surname;
@@ -13,40 +15,51 @@ public class Human extends Basic {
         this.surname = builder.surname;
     }
 
-    public Gender getGender() {
-        return gender;
+    public static Human fromString(String data) {
+        String[] parts = data.split(",");
+        if (parts.length != 3) {
+            throw new IllegalArgumentException("Неверный формат данных");
+        }
+
+        try {
+            Gender gender = Gender.valueOf(parts[0].trim());
+            int age = Integer.parseInt(parts[1].trim());
+            String surname = parts[2].trim();
+
+            return new HumanBuilder()
+                    .setGender(gender)
+                    .setAge(age)
+                    .setSurname(surname)
+                    .build();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Верный формат данных", e);
+        }
     }
 
-    public int getAge() {
-        return age;
-    }
+    public static Human fromUserInput(Scanner scanner) {
+        System.out.println("Введите пол (MALE, FEMALE):");
+        Gender gender = Gender.valueOf(scanner.nextLine().trim());
 
-    public String getSurname() {
-        return surname;
+        System.out.println("Введите возраст:");
+        int age = Integer.parseInt(scanner.nextLine().trim());
+
+        System.out.println("Введите фамилию:");
+        String surname = scanner.nextLine().trim();
+
+        return new HumanBuilder()
+                .setGender(gender)
+                .setAge(age)
+                .setSurname(surname)
+                .build();
     }
 
     @Override
     public String toString() {
         return "Human{" +
-                "gender=" + gender.getValue() +
+                "gender=" + gender +
                 ", age=" + age +
                 ", surname='" + surname + '\'' +
                 '}';
-    }
-
-    @Override
-    public void validate() {
-
-    }
-
-    @Override
-    public int getIntValue() {
-        return 0;
-    }
-
-    @Override
-    public int compareTo(Basic o) {
-        return 0;
     }
 
     public static class HumanBuilder {
@@ -70,13 +83,15 @@ public class Human extends Basic {
         }
 
         public Human build() {
-            if (!Util.isStringValid(gender.getValue())) {
+            if (gender == null) {
                 throw new IllegalArgumentException("Пол должен быть установлен");
             }
-            if (!Util.isIntValid(age)) {
+            if (age < 0) {
                 throw new IllegalArgumentException("Возраст не может быть отрицательным");
             }
-
+            if (surname == null || surname.trim().isEmpty()) {
+                throw new IllegalArgumentException("Фамилия должна быть установлена");
+            }
             return new Human(this);
         }
     }

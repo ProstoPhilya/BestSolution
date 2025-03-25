@@ -1,4 +1,4 @@
-package org.CustomClass.Enums;
+package org.owlTeam.entityClass.enums;
 
 /**
  * Перечисление материалов, из которых может быть сделана бочка

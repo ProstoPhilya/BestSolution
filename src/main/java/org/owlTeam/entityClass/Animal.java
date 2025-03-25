@@ -1,4 +1,4 @@
-package org.CustomClass;
+package org.owlTeam.entityClass;
 
 public class Animal extends Basic {
     private static final Long serialVersionUID = 1L;
