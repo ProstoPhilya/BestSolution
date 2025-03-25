@@ -2,7 +2,6 @@ package org.owlTeam;
 
 import org.owlTeam.entityClass.Animal;
 import org.owlTeam.entityClass.Basic;
-import org.owlTeam.SortStrategy.SortStrategy;
 import org.owlTeam.entityClass.factory.AnimalFactory;
 
 import java.util.Scanner;

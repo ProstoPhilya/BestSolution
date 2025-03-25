@@ -1,6 +1,4 @@
-package org.owlTeam.SortStrategy;
-
-import org.owlTeam.CustomArrayList;
+package org.owlTeam;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
