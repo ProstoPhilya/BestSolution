@@ -61,7 +61,7 @@ public class Animal extends Basic {
                 "Вид='" + species + '\'' +
                 ", Цвет глаз='" + eyeColor + '\'' +
                 ", age=" + age +
-                ", Пушистый=" + furry + '\'' +
+                ", Волосатый=" + (furry ? "Да" : "Нет") + '\'' +
                 '}';
     }
 

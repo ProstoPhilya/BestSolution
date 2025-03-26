@@ -1,9 +1,12 @@
 package org.owlTeam.entityClass.factory;
 
 import org.owlTeam.CustomArrayList;
+import org.owlTeam.entityClass.Animal;
 import org.owlTeam.entityClass.Basic;
 import org.owlTeam.entityClass.Human;
 import org.owlTeam.entityClass.enums.Gender;
+import org.owlTeam.entityClass.enums.Species;
+import org.owlTeam.entityClass.enums.Surnames;
 
 import java.io.*;
 import java.util.Random;
@@ -13,21 +16,33 @@ public class HumanFactory implements FactoryStrategy<Basic> {
     @Override
     public CustomArrayList<Basic> fromFile(String fileName, int size) throws IOException, ClassNotFoundException {
         CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-
-                Human human = new Human.HumanBuilder()
-                        .setSurname(parts[0])
-                        .setAge(Integer.parseInt(parts[1]))
-                        .setGender(Gender.valueOf(parts[2]))
-                        .build();
-                arrayList.add(human);
+        int i = 0;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            for (; i < size; i++) {
+                Object object = ois.readObject();
+                if (object instanceof Human){
+                    Human human = (Human) object;
+                    human.validate();
+                    arrayList.add(human);
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            if (e instanceof StreamCorruptedException) {
+                System.err.println("Ошибка десериализации: данные повреждены.");
+            }
+            else if(e instanceof FileNotFoundException) {
+                System.out.println("Файл не найден: " + e.getMessage());
+            }
+            else if(e instanceof EOFException){
+                System.out.println("Конец файла. Хотите дозаполнить случайными животными?(Да/Нет)");
+                Scanner scanner = new Scanner(System.in);
+                if (scanner.nextLine().equals("Да")){
+                    arrayList.addAll(this.fromGenerator(size-i));
+                    return arrayList;
+                }
+            }
         }
+
         return arrayList;
     }
 
@@ -35,13 +50,16 @@ public class HumanFactory implements FactoryStrategy<Basic> {
     public CustomArrayList<Basic> fromGenerator(int size) {
         Random random = new Random();
         CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
-        String[] surnames = {"Иванов", "Петров", "Сидоров", "Эйхольс", "Львов"};
+        Surnames[] surnames = Surnames.values();
         Gender[] genders = Gender.values();
+        Gender gender;
+        String surname;
+        int age;
 
         for (int i = 0; i < size; i++) {
-            String surname = surnames[random.nextInt(surnames.length)];
-            int age = random.nextInt(94);
-            Gender gender = genders[random.nextInt(genders.length)];
+            surname = String.valueOf(surnames[random.nextInt(Surnames.values().length)].getName());
+            age = random.nextInt(1,94);
+            gender = genders[random.nextInt(genders.length)];
 
             arrayList.add(new Human.HumanBuilder()
                     .setAge(age)

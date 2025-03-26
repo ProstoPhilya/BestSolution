@@ -4,22 +4,13 @@ public enum Gender {
     MALE("Мужской"),
     FEMALE("Женский");
 
-    private final String value;
+    private final String name;
 
-    Gender(String value) {
-        this.value = value;
+    Gender(String name) {
+        this.name = name;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public static Gender fromValue(String value) {
-        for (Gender gender : Gender.values()) {
-            if (gender.getValue().equalsIgnoreCase(value.trim())) {
-                return gender;
-            }
-        }
-        throw new IllegalArgumentException("Неизвестное значение пола: " + value);
+    public String getName() {
+        return name;
     }
 }

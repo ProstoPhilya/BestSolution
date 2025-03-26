@@ -14,9 +14,9 @@ public class AnimalFactory implements FactoryStrategy<Basic> {
     @Override
     public CustomArrayList<Basic> fromFile(String fileName, int size) {
         CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
-
+        int i = 0;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-            for (int i = 0; i < size; i++) {
+            for (; i < size; i++) {
                 Object object = ois.readObject();
                 if (object instanceof Animal){
                     Animal animal = (Animal) object;
@@ -24,12 +24,21 @@ public class AnimalFactory implements FactoryStrategy<Basic> {
                     arrayList.add(animal);
                 }
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл не найден: " + e.getMessage());
-        } catch (StreamCorruptedException e){
-        } catch (EOFException e) {
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            if (e instanceof StreamCorruptedException) {
+                System.err.println("Ошибка десериализации: данные повреждены.");
+            }
+            else if(e instanceof FileNotFoundException) {
+                System.out.println("Файл не найден: " + e.getMessage());
+            }
+            else if(e instanceof EOFException){
+                System.out.println("Конец файла. Хотите дозаполнить случайными животными?(Да/Нет)");
+                Scanner scanner = new Scanner(System.in);
+                if (scanner.nextLine().equals("Да")){
+                    arrayList.addAll(this.fromGenerator(size-i));
+                    return arrayList;
+                }
+            }
         }
 
         return arrayList;
@@ -39,15 +48,19 @@ public class AnimalFactory implements FactoryStrategy<Basic> {
     public CustomArrayList<Basic> fromGenerator(int size) {
         Random random = new Random();
         CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
+        Species[] species = Species.values();
+        EyeColors[] eyeColors = EyeColors.values();
+        String eyeColor;
+        String specie;
 
         for (int i = 0; i < size; i++) {
-            Species specie = Species.values()[random.nextInt(Species.values().length)];
-            EyeColors eyeColor = EyeColors.values()[random.nextInt(EyeColors.values().length)];
+            specie = String.valueOf(species[random.nextInt(Species.values().length)].getName());
+            eyeColor = String.valueOf(eyeColors[random.nextInt(EyeColors.values().length)].getName());
             boolean fur = random.nextBoolean();
             int age = random.nextInt(1,31);
             arrayList.add(new Animal.Builder()
-                    .species(specie.getName())
-                    .eyeColor(eyeColor.getName())
+                    .species(specie)
+                    .eyeColor(eyeColor)
                     .fur(fur)
                     .age(age)
                     .build());

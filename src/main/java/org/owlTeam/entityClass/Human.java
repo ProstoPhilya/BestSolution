@@ -34,19 +34,32 @@ public class Human extends Basic {
                 '}';
     }
 
-    @Override
     public void validate() {
+        validateField(Util.isStringValid(surname), "Фамилия заполнена неправильно.");
+        validateField(Util.isIntValid(age), "Возраст заполнен неправильно.");
+        validateField(Util.isEnumValid(gender), "Пол заполнен неправильно.");
+    }
 
+    private void validateField(boolean isValid, String errorMessage) {
+        if (!isValid) throw new IllegalArgumentException(errorMessage);
     }
 
     @Override
     public int getIntValue() {
-        return 0;
+        return age;
     }
 
     @Override
     public int compareTo(Basic o) {
-        return 0;
+        Human other = (Human) o;
+
+        int comparison = Util.comparingString(Human::getSurname).compare(this, other);
+        if (comparison != 0) return comparison;
+
+        comparison = Util.comparingEnum(Human::getGender).compare(this, other);
+        if (comparison != 0) return comparison;
+
+        return Util.comparingInt(Human::getAge).compare(this, other);
     }
 
     public static class HumanBuilder {

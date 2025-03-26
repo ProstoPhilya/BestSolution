@@ -28,8 +28,18 @@ public class CustomArrayList<T> implements Iterable<T> {
     }
 
     public void add(T elemet) {
-        if (capacity + 1 == size) resize();
+        if (capacity + 1 == size) resize(1);
         elements[capacity++] = elemet;
+    }
+
+    public void addAll(CustomArrayList<T> other) {
+        if (other.capacity > size - capacity) {
+            resize(other.capacity);
+        }
+
+        for (int i = 0; i < other.capacity; i++) {
+            elements[capacity++] = other.elements[i];
+        }
     }
 
     public void set(int index, T element) {
@@ -48,18 +58,15 @@ public class CustomArrayList<T> implements Iterable<T> {
         elements[capacity--] = null;
     }
 
-    private void resize() {
-        int newSize = size + (size >> 1);
+    private void resize(int requiredCapacity) {
+        int newSize = Math.max(size * 2, size + requiredCapacity);
         elements = Arrays.copyOf(elements, newSize);
+
         size = newSize;
     }
 
     public boolean isNotEmpty() {
         return capacity != 0;
-    }
-
-    public void print() {
-        System.out.println(this);
     }
 
     public void println() {
@@ -77,32 +84,9 @@ public class CustomArrayList<T> implements Iterable<T> {
         }
     }
 
-    public void clear() {
-        while (capacity != 0) {
-            elements[capacity--] = null;
-        }
-    }
-
     @Override
     public Iterator<T> iterator() {
         return new CustomIterator();
-    }
-
-    @Override
-    public String toString() {
-        if (capacity == 0) {
-            return "[]";
-        }
-        StringBuilder sb = new StringBuilder();
-        sb.append('[');
-        for (int i = 0; i < capacity; i++) {
-            sb.append(elements[i]);
-            if (i < capacity - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append(']');
-        return sb.toString();
     }
 
     public int indexOf(T element) {
@@ -140,6 +124,12 @@ public class CustomArrayList<T> implements Iterable<T> {
             CustomArrayList.this.remove(currentIndex - 1);
             currentIndex--;
             canRemove = false;
+        }
+    }
+
+    public void clear() {
+        while (capacity != 0) {
+            elements[capacity--] = null;
         }
     }
 }

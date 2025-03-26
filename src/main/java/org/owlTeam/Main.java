@@ -51,6 +51,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         AnimalFactory animalFactory = new AnimalFactory();
+        //BarrelFactory barrelFactory = new BarrelFactory();
         HumanFactory humanFactory = new HumanFactory();
 
         System.out.println("Введите команду:");
@@ -79,6 +80,7 @@ public class Main {
                         System.out.print("Укажите файл: ");
                         fileName = defaultPathForAnimal + scanner.next();
                         arrayList = animalFactory.fromFile(fileName, sizeArray);
+                        sizeArray = arrayList.size();
                         status();
                         break;
                     case 11:
@@ -126,7 +128,7 @@ public class Main {
                         }
                         System.out.print("Укажите файл: ");
                         fileName = scanner.next();
-                        arrayList = humanFactory.fromFile(fileName, sizeArray);
+                        arrayList = humanFactory.fromFile(defaultPathForHuman + fileName, sizeArray);
                         status();
                         break;
                     case 31:
@@ -197,10 +199,13 @@ public class Main {
                     case 6:
                         if (arrayList != null && arrayList.isNotEmpty()) {
                             System.out.print("Укажите файл: ");
-                            fileName = defaultPathForAnimal + scanner.next();
+                            fileName = scanner.next();
                             switch (arrayList.get(0)){
                                 case Animal e:
-                                    SaveToFile.save(fileName, arrayList);
+                                    SaveToFile.save(defaultPathForAnimal + fileName, arrayList);
+                                    break;
+                                case Human e:
+                                    SaveToFile.save(defaultPathForHuman + fileName, arrayList);
                                     break;
                                 default:
                                     System.out.println("Этот тип не включён");

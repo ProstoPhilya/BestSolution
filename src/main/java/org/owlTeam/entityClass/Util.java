@@ -1,5 +1,7 @@
 package org.owlTeam.entityClass;
 
+import org.owlTeam.entityClass.enums.Gender;
+
 import java.util.Comparator;
 import java.util.function.Function;
 
@@ -33,6 +35,14 @@ public final class Util {
         };
     }
 
+    public static <T, E extends Enum<E>> Comparator<T> comparingEnum(Function<T, E> keyExtractor) {
+        return (o1, o2) -> {
+            E key1 = keyExtractor.apply(o1);
+            E key2 = keyExtractor.apply(o2);
+            return key1.compareTo(key2);
+        };
+    }
+
     public static boolean isIntValid(int value) {
         return value > 0 && value <= 150;
     }
@@ -48,5 +58,9 @@ public final class Util {
         }
 
         return true;
+    }
+
+    public static <E extends Enum<E>> boolean isEnumValid(E value) {
+        return value != null;
     }
 }
