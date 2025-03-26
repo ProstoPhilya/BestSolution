@@ -28,7 +28,7 @@ public class Human extends Basic {
     @Override
     public String toString() {
         return "Human{" +
-                "gender=" + gender.getValue() +
+                "gender=" + gender.getName() +
                 ", age=" + age +
                 ", surname='" + surname + '\'' +
                 '}';
@@ -83,7 +83,7 @@ public class Human extends Basic {
         }
 
         public Human build() {
-            if (!Util.isStringValid(gender.getValue())) {
+            if (!Util.isStringValid(gender.getName())) {
                 throw new IllegalArgumentException("Пол должен быть установлен");
             }
             if (!Util.isIntValid(age)) {
