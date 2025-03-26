@@ -32,8 +32,8 @@ public class Human extends Basic {
     public String toString() {
         return "Human{" +
                 "gender=" + gender.getName() +
-                ", age=" + age +
                 ", surname='" + surname + '\'' +
+                ", age=" + age +
                 '}';
     }
 

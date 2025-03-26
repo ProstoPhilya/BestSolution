@@ -19,13 +19,13 @@ public class Main {
         System.out.println("1 - Указать размер массива");
         System.out.println("10 - Заполнить массив Animal с файла");
         System.out.println("\t11 - Заполнить массив Animal случайно");
-        System.out.println("\t12 - Заполнить массив Animal случайно вручную");
+        System.out.println("\t12 - Заполнить массив Animal вручную");
         System.out.println("20 - Заполнить массив Barrel с файла");
         System.out.println("\t21 - Заполнить массив Barrel случайно");
-        System.out.println("\t22 - Заполнить массив Barrel случайно вручную");
+        System.out.println("\t22 - Заполнить массив Barrel вручную");
         System.out.println("30 - Заполнить массив Human с файла");
         System.out.println("\t31 - Заполнить массив Human случайно");
-        System.out.println("\t32 - Заполнить массив Human случайно вручную\n");
+        System.out.println("\t32 - Заполнить массив Human вручную\n");
 
         System.out.println("4 - Отсортировать массив");
         System.out.println("\t41 - Отсортировать нечётные классы массива");
@@ -229,6 +229,13 @@ public class Main {
                     System.out.println("Введён некоректный формат команды.\n" +
                             "Используйте целые числа!");
                     scanner.nextLine();
+                } catch (NegativeArraySizeException e){
+                    while (sizeArray < 0){
+                        System.out.print("Введенно отрицательное значение массива. \n" +
+                                "Введите целое положительное значение размера массива - ");
+                        sizeArray = scanner.nextInt();
+                        scanner.nextLine();
+                    }
                 }
                 catch (Exception e) {
                     e.printStackTrace();

@@ -91,20 +91,6 @@ public class HumanFactory implements FactoryStrategy<Basic> {
                 }
             }
 
-            int age = -1;
-            while (age < 0) {
-                System.out.print("Введите возраст Человека: ");
-                String input = scanner.nextLine().trim();
-                try {
-                    age = Integer.parseInt(input);
-                    if (age < 0) {
-                        System.out.println("Возраст не может быть отрицательным.");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Введите целое число.");
-                }
-            }
-
             String surname;
             while (true) {
                 System.out.print("Введите фамилию Человека: ");
@@ -116,6 +102,20 @@ public class HumanFactory implements FactoryStrategy<Basic> {
                     System.out.println("Фамилия должна содержать только буквы и дефисы. Без цифр и спецсимволов.");
                 } else {
                     break;
+                }
+            }
+
+            int age = -1;
+            while (age < 0) {
+                System.out.print("Введите возраст Человека: ");
+                String input = scanner.nextLine().trim();
+                try {
+                    age = Integer.parseInt(input);
+                    if (age < 0) {
+                        System.out.println("Возраст не может быть отрицательным.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Введите целое число.");
                 }
             }
 
