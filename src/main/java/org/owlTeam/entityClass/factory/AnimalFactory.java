@@ -11,6 +11,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class AnimalFactory implements FactoryStrategy<Basic> {
+
     @Override
     public CustomArrayList<Basic> fromFile(String fileName, int size) {
         CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
@@ -18,13 +19,13 @@ public class AnimalFactory implements FactoryStrategy<Basic> {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
             for (; i < size; i++) {
                 Object object = ois.readObject();
-                if (object instanceof Animal){
-                    Animal animal = (Animal) object;
+                if (object instanceof Animal animal){
                     animal.validate();
                     arrayList.add(animal);
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
+        }
+        catch (IOException | ClassNotFoundException e) {
             if (e instanceof StreamCorruptedException) {
                 System.err.println("Ошибка десериализации: данные повреждены.");
             }
@@ -52,12 +53,14 @@ public class AnimalFactory implements FactoryStrategy<Basic> {
         EyeColors[] eyeColors = EyeColors.values();
         String eyeColor;
         String specie;
+        boolean fur;
+        int age;
 
         for (int i = 0; i < size; i++) {
             specie = String.valueOf(species[random.nextInt(Species.values().length)].getName());
             eyeColor = String.valueOf(eyeColors[random.nextInt(EyeColors.values().length)].getName());
-            boolean fur = random.nextBoolean();
-            int age = random.nextInt(1,31);
+            fur = random.nextBoolean();
+            age = random.nextInt(1,31);
             arrayList.add(new Animal.Builder()
                     .species(specie)
                     .eyeColor(eyeColor)

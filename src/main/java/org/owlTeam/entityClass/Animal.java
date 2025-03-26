@@ -1,5 +1,8 @@
 package org.owlTeam.entityClass;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Animal extends Basic {
     private String species;
     private String eyeColor;
@@ -35,9 +38,21 @@ public class Animal extends Basic {
     }
 
     public void validate() {
-        if (!Util.isStringValid(species)) throw new IllegalArgumentException("Поле вид заполненно неправильно.");
-        if (!Util.isStringValid(eyeColor)) throw new IllegalArgumentException("Цвет глаз заполнен неправильно.");
-        if (!Util.isIntValid(age)) throw new IllegalArgumentException("Возраст заполнен неправильно.");
+        List<String> errors = new ArrayList<>();
+
+        if (!Util.isStringValid(species)) {
+            errors.add("Поле 'Вид' заполнено неправильно.");
+        }
+        if (!Util.isStringValid(eyeColor)) {
+            errors.add("Поле 'Цвет глаз' заполнен неправильно.");
+        }
+        if (!Util.isIntValid(age)) {
+            errors.add("Поле 'Возраст' заполнен неправильно.");
+        }
+
+        if (!errors.isEmpty()) {
+            throw new IllegalArgumentException(String.join(", ", errors));
+        }
     }
 
     @Override

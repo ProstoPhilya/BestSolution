@@ -1,11 +1,9 @@
 package org.owlTeam.entityClass.factory;
 
 import org.owlTeam.CustomArrayList;
-import org.owlTeam.entityClass.Animal;
 import org.owlTeam.entityClass.Basic;
 import org.owlTeam.entityClass.Human;
 import org.owlTeam.entityClass.enums.Gender;
-import org.owlTeam.entityClass.enums.Species;
 import org.owlTeam.entityClass.enums.Surnames;
 
 import java.io.*;
@@ -14,14 +12,13 @@ import java.util.Scanner;
 
 public class HumanFactory implements FactoryStrategy<Basic> {
     @Override
-    public CustomArrayList<Basic> fromFile(String fileName, int size) throws IOException, ClassNotFoundException {
+    public CustomArrayList<Basic> fromFile(String fileName, int size) {
         CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
         int i = 0;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
             for (; i < size; i++) {
                 Object object = ois.readObject();
-                if (object instanceof Human){
-                    Human human = (Human) object;
+                if (object instanceof Human human){
                     human.validate();
                     arrayList.add(human);
                 }
@@ -108,7 +105,7 @@ public class HumanFactory implements FactoryStrategy<Basic> {
                 }
             }
 
-            String surname = "";
+            String surname;
             while (true) {
                 System.out.print("Введите фамилию Человека: ");
                 surname = scanner.nextLine().trim();

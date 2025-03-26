@@ -2,6 +2,9 @@ package org.owlTeam.entityClass;
 
 import org.owlTeam.entityClass.enums.Gender;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Human extends Basic {
     private Gender gender;
     private int age;
@@ -35,9 +38,21 @@ public class Human extends Basic {
     }
 
     public void validate() {
-        validateField(Util.isStringValid(surname), "Фамилия заполнена неправильно.");
-        validateField(Util.isIntValid(age), "Возраст заполнен неправильно.");
-        validateField(Util.isEnumValid(gender), "Пол заполнен неправильно.");
+        List<String> errors = new ArrayList<>();
+
+        if (!Util.isStringValid(surname)) {
+            errors.add("Поле 'Фамилия' заполнена неправильно.");
+        }
+        if (!Util.isEnumValid(gender)) {
+            errors.add("Поле 'Цвет глаз' заполнен неправильно.");
+        }
+        if (!Util.isIntValid(age)) {
+            errors.add("Поле 'Возраст' заполнен неправильно.");
+        }
+
+        if (!errors.isEmpty()) {
+            throw new IllegalArgumentException(String.join(", ", errors));
+        }
     }
 
     private void validateField(boolean isValid, String errorMessage) {

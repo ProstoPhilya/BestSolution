@@ -1,9 +1,11 @@
 package org.owlTeam;
 
-import org.owlTeam.entityClass.Animal;
 import org.owlTeam.entityClass.Basic;
+import org.owlTeam.entityClass.Animal;
+import org.owlTeam.entityClass.Barrel;
 import org.owlTeam.entityClass.Human;
 import org.owlTeam.entityClass.factory.AnimalFactory;
+import org.owlTeam.entityClass.factory.BarrelFactory;
 import org.owlTeam.entityClass.factory.HumanFactory;
 
 import java.util.InputMismatchException;
@@ -11,7 +13,6 @@ import java.util.Scanner;
 
 public class Main {
     private static CustomArrayList<Basic> arrayList = null;
-    private static Basic binarySearchResult = null;
 
     private static void outMenu(){
         System.out.println("0 - Выход");
@@ -51,7 +52,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         AnimalFactory animalFactory = new AnimalFactory();
-        //BarrelFactory barrelFactory = new BarrelFactory();
+        BarrelFactory barrelFactory = new BarrelFactory();
         HumanFactory humanFactory = new HumanFactory();
 
         System.out.println("Введите команду:");
@@ -101,24 +102,31 @@ public class Main {
                         arrayList = animalFactory.fromConsole(scanner, sizeArray);
                         break;
                     case 20:
-                        scanner.nextLine();
+                        if (sizeArray == 0) {
+                            System.out.print("Укажите размер массива = ");
+                            sizeArray = scanner.nextInt();
+                            scanner.nextLine();
+                        }
                         System.out.print("Укажите файл: ");
-                        fileName = scanner.next();
-                        System.out.println("Из файла " + fileName + " заполнить массив Barrel");
+                        fileName = defaultPathForBarrel + scanner.next();
+                        arrayList = barrelFactory.fromFile(fileName, sizeArray);
+                        status();
                         break;
                     case 21:
                         if (sizeArray == 0) {
                             System.out.print("Укажите размер массива = ");
                             sizeArray = scanner.nextInt();
                         }
-                        System.out.println("Рандом Barrel " + sizeArray);
+                        arrayList = barrelFactory.fromGenerator(sizeArray);
+                        status();
                         break;
                     case 22:
                         if (sizeArray == 0) {
                             System.out.print("Укажите размер массива = ");
                             sizeArray = scanner.nextInt();
+                            scanner.nextLine();
                         }
-                        System.out.println("Ручной Barrel " + sizeArray);
+                        arrayList = barrelFactory.fromConsole(scanner, sizeArray);
                         break;
                     case 30:
                         if (sizeArray == 0) {
@@ -127,8 +135,8 @@ public class Main {
                             scanner.nextLine();
                         }
                         System.out.print("Укажите файл: ");
-                        fileName = scanner.next();
-                        arrayList = humanFactory.fromFile(defaultPathForHuman + fileName, sizeArray);
+                        fileName = defaultPathForHuman + scanner.next();
+                        arrayList = humanFactory.fromFile(fileName, sizeArray);
                         status();
                         break;
                     case 31:
@@ -170,46 +178,39 @@ public class Main {
                         break;
                     case 5:
                         if (arrayList != null && arrayList.isNotEmpty()) {
-                            Basic searchElement = null;
-                                switch (arrayList.get(0)) {
-                                    case Animal e:
-                                        System.out.println("Задайте искомое животное");
-                                        searchElement = animalFactory.fromConsole(scanner, 1).get(0);
-                                        Basic element = BinarySearch.search(arrayList, searchElement);
-                                        if (element != null) {
-                                            System.out.println("Найден запрашиваемый объект: ");
-                                            System.out.println(element);
-                                            //binarySearchResult.add(element);
-                                        } else {
-                                            System.out.println("Запрашиваемый объект не найден");
-                                        }
-                                        break;
-//                                case Barel e:
-//                                System.out.println("Задайте искомое животное");
-//                                Basic searchElement = animalFactory.fromConsole(scanner, 1).get(0);
-//                                    break;
-                                    case Human e:
-                                        System.out.println("Задайте искомого человека");
-                                        searchElement = humanFactory.fromConsole(scanner, 1).get(0);
-                                        break;
-                                    default: break;
-                                }
+                            Basic searchElement;
+                            Object obj = arrayList.get(0);
+
+                            if (obj instanceof Animal) {
+                                System.out.println("Задайте искомое животное");
+                                searchElement = animalFactory.fromConsole(scanner, 1).get(0);
+                                outSearchElement(searchElement);
+                            } else if (obj instanceof Barrel) {
+                                System.out.println("Задайте искомую бочку");
+                                searchElement = barrelFactory.fromConsole(scanner, 1).get(0);
+                                outSearchElement(searchElement);
+                            } else if (obj instanceof Human) {
+                                System.out.println("Задайте искомого человека");
+                                searchElement = humanFactory.fromConsole(scanner, 1).get(0);
+                                outSearchElement(searchElement);
+                            }
+
                         }else System.out.println("Массив пуст, заполните массив");
                         break;
                     case 6:
                         if (arrayList != null && arrayList.isNotEmpty()) {
                             System.out.print("Укажите файл: ");
                             fileName = scanner.next();
-                            switch (arrayList.get(0)){
-                                case Animal e:
-                                    SaveToFile.save(defaultPathForAnimal + fileName, arrayList);
-                                    break;
-                                case Human e:
-                                    SaveToFile.save(defaultPathForHuman + fileName, arrayList);
-                                    break;
-                                default:
-                                    System.out.println("Этот тип не включён");
-                                    break;
+
+                            Object obj = arrayList.get(0);
+                            if (obj instanceof Animal) {
+                                SaveToFile.save(defaultPathForAnimal + fileName, arrayList);
+                            }
+                            else if (obj instanceof Barrel) {
+                                SaveToFile.save(defaultPathForBarrel + fileName, arrayList);
+                            }
+                            else if (obj instanceof Human) {
+                                SaveToFile.save(defaultPathForHuman + fileName, arrayList);
                             }
                         } else System.out.println("Массив пуст, заполните массив");
                         break;
@@ -220,8 +221,6 @@ public class Main {
                     case 8:
                         outMenu();
                         break;
-                    case 9:
-                        break;
                     default:
                         System.out.println("Недопустимая команда повторите ввод");
                         break;
@@ -230,9 +229,10 @@ public class Main {
                     System.out.println("Введён некоректный формат команды.\n" +
                             "Используйте целые числа!");
                     scanner.nextLine();
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     e.printStackTrace();
-            }
+                }
         }
         scanner.close();
     }
@@ -242,8 +242,14 @@ public class Main {
             System.out.println("Содержимое списка: ");
             arrayList.println();
         }
-        if (binarySearchResult != null) {
-            System.out.println("Найденные элементы:\n" + binarySearchResult);
+    }
+
+    public static void outSearchElement(Basic searchElement){
+        Basic element = BinarySearch.search(arrayList, searchElement);
+        if (element != null) {
+            System.out.println("Найден запрашиваемый объект: " + element);
+        } else {
+            System.out.println("Запрашиваемый объект не найден");
         }
     }
 }

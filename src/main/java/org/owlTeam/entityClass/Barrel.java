@@ -1,90 +1,100 @@
 package org.owlTeam.entityClass;
 
-import org.owlTeam.entityClass.enums.StoredMaterial;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Barrel extends Basic {
-    private static final Long serialVersionUID = 1L;
-    private double volume;
-    private String storedMaterial;  // Теперь строка
     private String material;
+    private String storedMaterial;
+    private int volume;
 
     private Barrel(Builder builder) {
-        this.volume = builder.volume;
-        this.storedMaterial = builder.storedMaterial;
         this.material = builder.material;
-    }
-
-    public double getVolume() {
-        return volume;
-    }
-
-    public String getStoredMaterial() {
-        return storedMaterial;
+        this.storedMaterial = builder.storedMaterial;
+        this.volume = builder.volume;
     }
 
     public String getMaterial() {
         return material;
     }
 
+    public String getStoredMaterial() {
+        return storedMaterial;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
     @Override
     public int getIntValue() {
-        return (int) volume;
+        return volume;
     }
 
     public void validate() {
-        if (!Util.isDoubleValid(volume)) throw new IllegalArgumentException("Объем заполнен неправильно.");
-        if (!Util.isStringValid(storedMaterial)) throw new IllegalArgumentException("Хранимый материал не указан.");
-        if (!Util.isStringValid(material)) throw new IllegalArgumentException("Материал бочки заполнен неправильно.");
+        List<String> errors = new ArrayList<>();
+
+        if (!Util.isStringValid(material)) {
+            errors.add("Поле 'Материал бочки' заполнен неправильно.");
+        }
+        if (!Util.isStringValid(storedMaterial)) {
+            errors.add("Поле 'Хранимый материа' заполнен неправильно.");
+        }
+        if (!Util.isIntValid(volume)) {
+            errors.add("Поле 'Объем' заполнено неправильно.");
+        }
+
+        if (!errors.isEmpty()) {
+            throw new IllegalArgumentException(String.join(", ", errors));
+        }
     }
 
     @Override
     public int compareTo(Basic o) {
-        if (o == null) throw new NullPointerException("Cannot compare with null");
-        if (!(o instanceof Barrel)) throw new ClassCastException("Cannot compare Barrel with " + o.getClass().getSimpleName());
-
         Barrel other = (Barrel) o;
-        int volumeComparison = Double.compare(this.getVolume(), other.getVolume());
-        if (volumeComparison != 0) return volumeComparison;
+        int comparison = Util.comparingString(Barrel::getMaterial).compare(this, other);
+        if (comparison != 0) return comparison;
 
-        int materialComparison = this.storedMaterial.compareTo(other.storedMaterial);
-        if (materialComparison != 0) return materialComparison;
+        comparison = Util.comparingString(Barrel::getStoredMaterial).compare(this, other);
+        if (comparison != 0) return comparison;
 
-        return this.getMaterial().compareTo(other.getMaterial());
+
+        return  Util.comparingInt(Barrel::getVolume).compare(this, other);
     }
 
     @Override
     public String toString() {
         return "Barrel{" +
-                "volume=" + volume +
-                ", storedMaterial='" + storedMaterial + '\'' +
-                ", material='" + material + '\'' +
+                "Бочка ='" + material + '\'' +
+                ", Заполнена ='" + storedMaterial + '\'' +
+                ", Объём =" + volume +
                 '}';
     }
 
     public static class Builder {
-        private double volume;
-        private String storedMaterial;
         private String material;
+        private String storedMaterial;
+        private int volume;
 
         public Builder() {}
 
-        public Builder setVolume(double volume) {
-            this.volume = volume;
-            return this;
-        }
-
-        public Builder setStoredMaterial(String storedMaterial) {
-            this.storedMaterial = storedMaterial;
-            return this;
-        }
-
-        public Builder setMaterial(String material) {
+        public Builder material(String material) {
             this.material = material;
             return this;
         }
 
+        public Builder storedMaterial(String storedMaterial) {
+            this.storedMaterial = storedMaterial;
+            return this;
+        }
+
+        public Builder volume(int volume) {
+            this.volume = volume;
+            return this;
+        }
+
         public Barrel build() {
-            if (!Util.isDoubleValid(volume)) throw new IllegalArgumentException("Объем заполнен неправильно.");
+            if (!Util.isIntValid(volume)) throw new IllegalArgumentException("Объем заполнен неправильно.");
             if (!Util.isStringValid(storedMaterial)) throw new IllegalArgumentException("Хранимый материал не указан.");
             if (!Util.isStringValid(material)) throw new IllegalArgumentException("Материал бочки заполнен неправильно.");
             return new Barrel(this);
