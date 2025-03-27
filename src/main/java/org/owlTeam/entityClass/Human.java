@@ -68,10 +68,10 @@ public class Human extends Basic {
     public int compareTo(Basic o) {
         Human other = (Human) o;
 
-        int comparison = Util.comparingString(Human::getSurname).compare(this, other);
+        int comparison = Util.comparingEnum(Human::getGender).compare(this, other);
         if (comparison != 0) return comparison;
 
-        comparison = Util.comparingEnum(Human::getGender).compare(this, other);
+        comparison = Util.comparingString(Human::getSurname).compare(this, other);
         if (comparison != 0) return comparison;
 
         return Util.comparingInt(Human::getAge).compare(this, other);
