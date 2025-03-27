@@ -15,29 +15,28 @@ public class Main {
     private static CustomArrayList<Basic> arrayList = null;
 
     private static void outMenu(){
-        System.out.println("0 - Выход");
-        System.out.println("1 - Указать размер массива");
-        System.out.println("10 - Заполнить массив Animal с файла");
-        System.out.println("\t11 - Заполнить массив Animal случайно");
-        System.out.println("\t12 - Заполнить массив Animal вручную");
-        System.out.println("20 - Заполнить массив Barrel с файла");
-        System.out.println("\t21 - Заполнить массив Barrel случайно");
-        System.out.println("\t22 - Заполнить массив Barrel вручную");
-        System.out.println("30 - Заполнить массив Human с файла");
-        System.out.println("\t31 - Заполнить массив Human случайно");
-        System.out.println("\t32 - Заполнить массив Human вручную\n");
-
-        System.out.println("4 - Отсортировать массив");
-        System.out.println("\t41 - Отсортировать нечётные классы массива");
-        System.out.println("\t42 - Отсортировать чётные классы массива");
-        System.out.println("5 - Поиск нужного класса в массиве");
-        System.out.println("6 - Записать массив в файл");
-        System.out.println("6 - Записать результат бинарного поиска в файл");
-
-
-        System.out.println("7 - Вывести массив и найденные элементы");
-        System.out.println("8 - показать список комманд");
-        System.out.print("Готов к вводу");
+        System.out.println("""
+                0 - Выход
+                1 - Указать размер массива
+                10 - Заполнить массив Animal с файла
+                    11 - Заполнить массив Animal случайно
+                    12 - Заполнить массив Animal вручную
+                20 - Заполнить массив Barrel с файла
+                    21 - Заполнить массив Barrel случайно
+                    22 - Заполнить массив Barrel вручную
+                30 - Заполнить массив Human с файла
+                    31 - Заполнить массив Human случайно
+                    32 - Заполнить массив Human вручную
+                
+                4 - Отсортировать массив
+                    41 - Отсортировать нечётные классы массива
+                    42 - Отсортировать чётные классы массива
+                5 - Поиск нужного класса в массиве
+                6 - Записать массив в файл
+                7 - Вывести массив и найденные элементы
+                8 - Показать список команд
+                Готов к вводу
+                """);
     }
 
     public static void main(String[] args) {

@@ -11,33 +11,34 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class HumanFactory implements FactoryStrategy<Basic> {
+
     @Override
     public CustomArrayList<Basic> fromFile(String fileName, int size) {
         CustomArrayList<Basic> arrayList = new CustomArrayList<>(size);
-        int i = 0;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-            for (; i < size; i++) {
-                Object object = ois.readObject();
-                if (object instanceof Human human){
-                    human.validate();
-                    arrayList.add(human);
+            for (int i = 0; i < size; i++) {
+                try {
+                    Object object = ois.readObject();
+                    if (object instanceof Human human) {
+                        human.validate();
+                        arrayList.add(human);
+                    }
+                } catch (ClassNotFoundException e) {
+                    System.err.println("Неизвестный класс в файле: " + e.getMessage());
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
-            if (e instanceof StreamCorruptedException) {
-                System.err.println("Ошибка десериализации: данные повреждены.");
+        } catch (StreamCorruptedException e) {
+            System.err.println("Файл поврежден: " + fileName);
+        } catch (FileNotFoundException e) {
+            System.err.println("Файл не найден: " + fileName);
+        } catch (EOFException e) {
+            System.out.println("Достигнут конец файла. Дозаполнить случайными людьми? (Да/Нет)");
+            String answer = new Scanner(System.in).nextLine();
+            if (answer.equalsIgnoreCase("Да")) {
+                arrayList.addAll(this.fromGenerator(size - arrayList.size()));
             }
-            else if(e instanceof FileNotFoundException) {
-                System.out.println("Файл не найден: " + e.getMessage());
-            }
-            else if(e instanceof EOFException){
-                System.out.println("Конец файла. Хотите дозаполнить случайными животными?(Да/Нет)");
-                Scanner scanner = new Scanner(System.in);
-                if (scanner.nextLine().equals("Да")){
-                    arrayList.addAll(this.fromGenerator(size-i));
-                    return arrayList;
-                }
-            }
+        } catch (IOException e) {
+            System.err.println("Ошибка ввода-вывода: " + e.getMessage());
         }
 
         return arrayList;

@@ -27,9 +27,9 @@ public class CustomArrayList<T> implements Iterable<T> {
         return (T) elements[index];
     }
 
-    public void add(T elemet) {
+    public void add(T element) {
         if (capacity + 1 == size) resize(1);
-        elements[capacity++] = elemet;
+        elements[capacity++] = element;
     }
 
     public void addAll(CustomArrayList<T> other) {
@@ -124,12 +124,6 @@ public class CustomArrayList<T> implements Iterable<T> {
             CustomArrayList.this.remove(currentIndex - 1);
             currentIndex--;
             canRemove = false;
-        }
-    }
-
-    public void clear() {
-        while (capacity != 0) {
-            elements[capacity--] = null;
         }
     }
 }
